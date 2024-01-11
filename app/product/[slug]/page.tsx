@@ -39,13 +39,13 @@ const Product = () => {
           </div>
         </div>
         <div className=" h-full text-[20px] flex flex-col gap-[10px] w-full md:w-[30%]">
-          <div className=" flex items-center md:items-start w-full justify-center md:justify-start flex-col md:flex-row">
+          <div className=" flex items-center md:items-start w-full justify-center md:justify-start flex-col ">
             <p>Tea length Shirt</p>
             <p>#4000</p>
           </div>
 
           <div className=" flex rounded md:border-0 border-dark border-2 md:flex-col gap-[10px]">
-            <div className="flex-1 flex items-center justify-between px-3 md:px-0 md:flex-auto flex-row-reverse">
+            <div className="flex-1 flex items-center md:items-start justify-between px-3 md:flex-col md:px-0 md:flex-auto flex-row-reverse">
               <span>Color:Black</span>
               <div className=" w-5 h-5 rounded-sm  bg-black"></div>
             </div>
