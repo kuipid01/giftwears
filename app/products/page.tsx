@@ -17,7 +17,7 @@ const Products = () => {
       <div className="  flex border-y-2  gap-[20px] border-dark py-2 overflow-x-hidden">
         {[1, 2, 3, 4, 5, 6].map((word, i) => (
           <h1
-            className=" -translate-x-[50px] uppercase text-[50px] font-light tracking-wide"
+            className=" -translate-x-[50px] uppercase text-[35px] md:text-[50px] font-light tracking-wide"
             key={i}
           >
             Outerwear
