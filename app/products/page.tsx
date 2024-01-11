@@ -54,9 +54,11 @@ const Products = () => {
                   objectPosition="top"
                 />
               </div>
-              <div className="flex justify-between uppercase font-normal text-[20px]">
+              <div className="flex  justify-center font-black uppercase  text-[20px]">
                 <span>Test Shoes</span>
-                <span>#4000</span>
+              </div>{" "}
+              <div className="flex  justify-center uppercase font-normal text-[20px]">
+                <span className="tracking-widest">#4000</span>
               </div>
             </div>
           ))}
