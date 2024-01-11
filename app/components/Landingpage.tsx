@@ -17,7 +17,7 @@ const Landingpage = () => {
         // style={bgStyle}
         className="h-[90vh] bg-light-gray overflow-hidden flex items-center w-full relative "
       >
-        <div className=" absolute bottom-[15%] md:bottom-auto md:relative md:left-auto md:translate-x-0  left-1/2 md:w-fit  -translate-x-1/2 justify-center items-center md:items-start text-white  text-center md:text-left z-30 md:text-dark flex flex-col space-y-2 md:ml-[8%] uppercase w-full">
+        <div className=" z-50 absolute bottom-[15%] md:bottom-auto md:relative md:left-auto md:translate-x-0  left-1/2 md:w-fit  -translate-x-1/2 justify-center items-center md:items-start text-white  text-center md:text-left  md:text-dark flex flex-col space-y-2 md:ml-[8%] uppercase w-full">
           <h1 className="text-[25px] md:text-[35px] tracking-wider  font-bold ">
             joy, one outfit at a time.
           </h1>
@@ -32,13 +32,13 @@ const Landingpage = () => {
           </Link>
         </div>
         <Image
-          className=" absolute object-cover scale-x-[-1] right-0 md:right-[6%] bottom-0 md:top-1/2 md:-translate-y-1/2"
+          className=" absolute object-cover scale-x-[-1] right-0  bottom-0 md:top-1/2 md:-translate-y-1/2"
           alt="model"
           width={700}
           height={700}
           src="/modelnew.png"
         />
-        <div className=" w-full h-full opacity-40  absolute top-0 left-0 bg-dark"></div>
+        <div className=" w-full h-full opacity-20  absolute top-0 left-0 bg-dark"></div>
       </div>
       <div className=" bg-light h-[50vh] flex flex-col space-y-3 justify-center items-center">
         <small className=" text-[20px]">UP TO</small>
@@ -49,12 +49,12 @@ const Landingpage = () => {
         <ChevronDown />
       </div>
       <div className="  ">
-        <div className=" w-[100%] h-screen mx-auto flex">
-          <div className=" flex-1  relative h-full bg-light-gray">
+        <div className=" md:px-0 w-[100%] h-screen mx-auto flex">
+          <div className=" flex-1  border relative h-full bg-light-gray">
             <Image
               src="/modl1.jpg "
               alt="Your Image"
-              layout="fill"
+              fill
               objectFit="cover"
               objectPosition="top"
             />
@@ -66,11 +66,11 @@ const Landingpage = () => {
               In Trend
             </Link>
           </div>
-          <div className=" flex-1  relative h-full bg-lighter-grey">
+          <div className=" flex-1 border  relative h-full bg-lighter-grey">
             <Image
               src="/model2.jpg "
               alt="Your Image"
-              layout="fill"
+              fill
               objectFit="cover"
               objectPosition="top"
             />
