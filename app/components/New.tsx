@@ -16,7 +16,7 @@ const New = () => {
             {[1, 2, 3].map((item, i) => (
               <div
                 key={i}
-                className="flex relative w-[calc(50%-10px)] md:w-[calc-(33.3333% - 20px)] flex-col justify-between h-[500px]"
+                className="flex relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
               >
                 <div className="w-full h-[90%] relative">
                   <Image

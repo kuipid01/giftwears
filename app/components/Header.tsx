@@ -81,7 +81,7 @@ const Nav = () => {
         </div>
       </div>
       {menuOpen && (
-        <div className=" z-40 border-b-2 border-dark/20 absolute top-[10vh] left-0 w-full bg-light h-screen">
+        <div className=" z-[500] border-b-2  border-dark/20 absolute top-[10vh] left-0 w-full bg-light h-screen">
           <ul className=" flex flex-col gap-2">
             {Navlinks.map((link) => (
               <li
