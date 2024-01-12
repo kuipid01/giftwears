@@ -69,8 +69,11 @@ const Cartpage = () => {
         </div>
         <div className=" flex md:hidden w-full  py-3 border-b border-dark "></div>
         <div className=" flex flex-col gap-2">
-          {items.map((item) => (
-            <div className=" w-full   flex justify-between h-[250px] md:h-[200px] items-start py-3 border-b border-dark ">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              className=" w-full   flex justify-between h-[250px] md:h-[200px] items-start py-3 border-b border-dark "
+            >
               <div className="flex gap-2 w-[80%] md:w-1/2 h-full ">
                 <div className=" bg-light-gray relative w-1/2 md:w-1/3 min-h-full">
                   <Image
