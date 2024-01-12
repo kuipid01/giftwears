@@ -1,7 +1,32 @@
+"use client";
+import useCartServices from "@/app/utils/store";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const Product = () => {
+  const { increase, items } = useCartServices();
+
+  type Item = {
+    name: string;
+    price: number;
+    qty: number;
+    size?: string;
+    color?: string;
+    id: string;
+    img: string;
+  };
+  const product = {
+    name: "test",
+    price: 3000,
+    qty: 1,
+    id: "testt",
+    img: "/model2.jpg",
+  };
+  const addToCart = (item: Item) => {
+    console.log("clivked");
+    increase(item);
+  };
+
   return (
     <div className=" border-b border-light bg-light-gray flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">
       <div className=" flex gap-1 items-center">
@@ -57,7 +82,10 @@ const Product = () => {
               <option value="">Select Size</option>
             </select>
           </div>
-          <button className=" bg-dark text-white py-3 rounded-sm">
+          <button
+            onClick={() => addToCart(product)}
+            className=" bg-dark text-white py-3 rounded-sm"
+          >
             Add To Cart
           </button>
           <p className=" font-light leading-8 text-left text-[18px]">
