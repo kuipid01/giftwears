@@ -47,7 +47,7 @@ const Product = () => {
               {[1, 2, 3].map((item) => (
                 <CarouselItem key={item}>
                   {" "}
-                  <div className="h-[500px] relative" k>
+                  <div className="h-[500px] relative">
                     <Image
                       src="/model.jpg"
                       alt="Your Image"
