@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import useCartServices from "../utils/store";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { addToCart, removeFromCart } from "../hooks/addToCart";
 import Link from "next/link";
 
 const Cartpage = () => {

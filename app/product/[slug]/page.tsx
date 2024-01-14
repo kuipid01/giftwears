@@ -1,5 +1,5 @@
 "use client";
-import { addToCart } from "@/app/hooks/addToCart";
+
 import useCartServices from "@/app/utils/store";
 import {
   Carousel,
@@ -19,7 +19,17 @@ const Product = () => {
     id: "testt",
     img: "/model2.jpg",
   };
-  const { increase, items, totalPrice, remove } = useCartServices();
+  type Item = {
+    name: string;
+    price: number;
+    qty: number;
+    size?: string;
+    color?: string;
+    id: string;
+    img: string;
+  };
+  const { increase, items, decrease, remove } = useCartServices();
+  const productIsInCart = items?.find((item: Item) => item.price === 3000);
 
   return (
     <div className=" border-b border-light bg-light-gray flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">
@@ -35,9 +45,9 @@ const Product = () => {
           <Carousel>
             <CarouselContent>
               {[1, 2, 3].map((item) => (
-                <CarouselItem>
+                <CarouselItem key={item}>
                   {" "}
-                  <div className="h-[500px] relative" key={item}>
+                  <div className="h-[500px] relative" k>
                     <Image
                       src="/model.jpg"
                       alt="Your Image"
@@ -98,12 +108,36 @@ const Product = () => {
               <option value="">Select Size</option>
             </select>
           </div>
-          <button
-            onClick={() => increase(product)}
-            className=" bg-dark text-white py-3 rounded-sm"
-          >
-            Add To Cart
-          </button>
+          {productIsInCart ? (
+            <div className="flex items-center text-[20px]  justify-start  flex-1">
+              <span className=" mr-3"> Change Quantity</span>
+              <button
+                onClick={() => decrease(product)}
+                className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
+              >
+                {" "}
+                -{" "}
+              </button>
+              <p className=" h-[40px] w-[40px] flex justify-center items-center">
+                {productIsInCart?.qty}
+              </p>
+              <button
+                onClick={() => increase(product)}
+                className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
+              >
+                {" "}
+                +{" "}
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => increase(product)}
+              className=" bg-dark text-white py-3 rounded-sm"
+            >
+              Add To Cart
+            </button>
+          )}
+
           <p className=" font-light leading-8 text-left text-[18px]">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque,
             quaerat qui fugit perspiciatis nulla suscipit ipsa a mollitia quis

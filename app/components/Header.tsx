@@ -15,7 +15,7 @@ import Image from "next/image";
 const Nav = () => {
   const { increase, items, totalPrice, decrease, remove } = useCartServices();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(true);
+  const [cartOpen, setCartOpen] = useState(false);
   const Navlinks = [
     {
       id: 1,
@@ -64,9 +64,12 @@ const Nav = () => {
         </Link>
       </div>
       <ul className="hidden  h-full md:flex items-center justify-between w-[60%]">
-        <li className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full">
-          Shop
-        </li>
+        <Link
+          className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full"
+          href="/products"
+        >
+          <li>Shop</li>
+        </Link>
         <li className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full">
           New In
         </li>
@@ -84,8 +87,11 @@ const Nav = () => {
         <div className="hidden flex-1 md:flex justify-center items-center md:border-r-2 border-light-gray h-full">
           <User />
         </div>
-        <div className="flex-1 flex justify-center items-center  border-light-gray h-full">
-          <ShoppingCart onClick={() => setCartOpen(true)} />
+        <div
+          onClick={() => setCartOpen(true)}
+          className="flex-1 flex cursor-pointer  justify-center items-center  border-light-gray h-full"
+        >
+          <ShoppingCart className="cursor-pointer" />
         </div>
       </div>
       {menuOpen && (
@@ -115,7 +121,10 @@ const Nav = () => {
           <div className=" w-[500px] px-5 relative h-screen  bg-light flex flex-col gap-2">
             <div className="flex py-5 justify-between ">
               <p> Cart({items?.length}) </p>{" "}
-              <X onClick={() => setCartOpen(false)} />
+              <X
+                className=" cursor-pointer"
+                onClick={() => setCartOpen(false)}
+              />
             </div>
             {items.length >= 1 ? (
               items.map((item, i) => (

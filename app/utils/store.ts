@@ -78,6 +78,9 @@ export default function useCartServices() {
         items: updatedCartItems,
         totalPrice,
       });
+        toast({
+        description: "Product quantity reduced 🤔",
+      });
     },
     init: () => cartStore.setState(initialState),
   };

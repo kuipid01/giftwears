@@ -41,7 +41,8 @@ const Products = () => {
         </div>
         <div className="w-full flex flex-wrap gap-[10px] md:gap-[20px] justify-between ">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, i) => (
-            <div
+            <Link
+              href={`/product/${item}`}
               key={i}
               className="flex relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
             >
@@ -60,7 +61,7 @@ const Products = () => {
               <div className="flex  justify-center uppercase font-normal text-[20px]">
                 <span className="tracking-widest">#4000</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className=" w-fit items-center mx-auto flex flex-col justify-center mt-[30px] text-[25px]">
