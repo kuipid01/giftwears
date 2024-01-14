@@ -1,20 +1,17 @@
 "use client";
+import { addToCart } from "@/app/hooks/addToCart";
 import useCartServices from "@/app/utils/store";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const Product = () => {
-  const { increase, items } = useCartServices();
-
-  type Item = {
-    name: string;
-    price: number;
-    qty: number;
-    size?: string;
-    color?: string;
-    id: string;
-    img: string;
-  };
   const product = {
     name: "test",
     price: 3000,
@@ -22,10 +19,7 @@ const Product = () => {
     id: "testt",
     img: "/model2.jpg",
   };
-  const addToCart = (item: Item) => {
-    console.log("clivked");
-    increase(item);
-  };
+  const { increase, items, totalPrice, remove } = useCartServices();
 
   return (
     <div className=" border-b border-light bg-light-gray flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">
@@ -37,7 +31,29 @@ const Product = () => {
         <span className=" cursor-pointer">Outwear</span>
       </div>
       <div className="md:h-screen h-fit flex md:flex-row flex-col gap-[20px]">
-        <div className="flex w-full h-[500px]  md:h-full gap-[20px] md:flex-1 flex-shrink-0">
+        <div className=" md:hidden">
+          <Carousel>
+            <CarouselContent>
+              {[1, 2, 3].map((item) => (
+                <CarouselItem>
+                  {" "}
+                  <div className="h-[500px] relative" key={item}>
+                    <Image
+                      src="/model.jpg"
+                      alt="Your Image"
+                      fill
+                      objectFit="cover"
+                      objectPosition="top"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+        <div className="hidden md:flex w-full h-[500px]  md:h-full gap-[20px] md:flex-1 flex-shrink-0">
           <div className="hidden md:flex w-[30%]  flex-col gap-[20px]">
             {[1, 2, 3].map((item) => (
               <div className="h-[300px] relative" key={item}>
@@ -83,7 +99,7 @@ const Product = () => {
             </select>
           </div>
           <button
-            onClick={() => addToCart(product)}
+            onClick={() => increase(product)}
             className=" bg-dark text-white py-3 rounded-sm"
           >
             Add To Cart

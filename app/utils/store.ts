@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import { useToast } from "@/components/ui/use-toast";
+
 import { persist } from "zustand/middleware";
 // create type for our cart
 
@@ -28,19 +30,49 @@ export const cartStore = create<Cart>()(
 );
 
 export default function useCartServices() {
+  const { toast } = useToast();
   const { items, totalPrice } = cartStore();
   return {
     items,
     totalPrice,
     increase: (item: Item) => {
       const exist = items.find((x) => x.id === item.id);
-      console.log(exist, item.id);
+
       const updatedCartItems = exist
         ? items.map((x) =>
             x.id === item.id ? { ...exist, qty: exist.qty + 1 } : x
           )
         : [...items, { ...item, qty: 1 }];
 
+      const { totalPrice } = calcPrice(updatedCartItems);
+      cartStore.setState({
+        items: updatedCartItems,
+        totalPrice,
+      });
+      toast({
+        description: "Product added ✔",
+      });
+    },
+    remove: (item: Item) => {
+      const updatedCartItems = items.filter((x) => x.id !== item.id);
+      const { totalPrice } = calcPrice(updatedCartItems);
+      cartStore.setState({
+        items: updatedCartItems,
+        totalPrice,
+      });
+      toast({
+        description: "Product removed 🤔",
+      });
+    },
+    decrease: (item: Item) => {
+      const exist = items.find((x) => x.id === item.id);
+
+      if (exist?.qty === 1) return;
+      const updatedCartItems = exist
+        ? items.map((x) =>
+            x.id === item.id ? { ...exist, qty: exist.qty - 1 } : x
+          )
+        : [];
       const { totalPrice } = calcPrice(updatedCartItems);
       cartStore.setState({
         items: updatedCartItems,

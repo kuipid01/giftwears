@@ -3,18 +3,11 @@ import { useEffect, useState } from "react";
 import useCartServices from "../utils/store";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { addToCart, removeFromCart } from "../hooks/addToCart";
+import Link from "next/link";
 
 const Cartpage = () => {
   const [mounted, setMounted] = useState(false);
-  type Item = {
-    name: string;
-    price: number;
-    qty: number;
-    size?: string;
-    color?: string;
-    id: string;
-    img: string;
-  };
 
   const [stagesOfPayment, setStagesOfPayment] = useState([
     { id: 1, desc: "Orders", stillOnTab: true },
@@ -24,10 +17,8 @@ const Cartpage = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  const { increase, items, totalPrice } = useCartServices();
-  const handleAdd = (item: Item) => {
-    increase(item);
-  };
+  const { increase, items, totalPrice, decrease, remove } = useCartServices();
+
   console.log(items);
   if (!mounted) return;
   return (
@@ -68,57 +59,91 @@ const Cartpage = () => {
           <div className=" flex-1 "> Price</div>
         </div>
         <div className=" flex md:hidden w-full  py-3 border-b border-dark "></div>
-        <div className=" flex flex-col gap-2">
-          {items.map((item, i) => (
-            <div
-              key={i}
-              className=" w-full   flex justify-between h-[250px] md:h-[200px] items-start py-3 border-b border-dark "
-            >
-              <div className="flex gap-2 w-[80%] md:w-1/2 h-full ">
-                <div className=" bg-light-gray relative w-1/2 md:w-1/3 min-h-full">
-                  <Image
-                    alt="cartImage"
-                    objectFit="contain"
-                    src={item.img}
-                    fill
-                  />
+        <div className=" w-full flex flex-col gap-2">
+          {items.length >= 1 ? (
+            items.map((item, i) => (
+              <div
+                key={i}
+                className=" w-full   flex justify-between h-[250px] md:h-[200px] items-start py-3 border-b border-dark "
+              >
+                <div className="flex gap-2 w-[80%] md:w-1/2 h-full ">
+                  <div className=" bg-light-gray relative w-1/2 md:w-1/3 min-h-full">
+                    <Image
+                      alt="cartImage"
+                      objectFit="contain"
+                      src={item.img}
+                      fill
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className=" capitalize">{item.name}</p>
+                    <p>Color:{item.color || "Not Specified"}</p>
+                    <p>Size:{item.size || "Not Specified"}</p>
+                    <p>Qty:{item.qty || "1"}</p>
+                    <span className=" text-[20px] font-bold">
+                      {" "}
+                      #{item.price}
+                    </span>{" "}
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <p className=" capitalize">{item.name}</p>
-                  <p>Color:{item.color || "Not Specified"}</p>
-                  <p>Size:{item.size || "Not Specified"}</p>
-                  <p>Qty:{item.qty || "1"}</p>
-                  <span className=" text-[20px] font-bold">
+                <div className="hidden md:flex items-center justify-start  flex-1">
+                  <button
+                    onClick={() => decrease(item)}
+                    className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
+                  >
+                    {" "}
+                    -{" "}
+                  </button>
+                  <p className=" h-[40px] w-[40px] flex justify-center items-center">
+                    {item.qty}
+                  </p>
+                  <button
+                    onClick={() => increase(item)}
+                    className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
+                  >
+                    {" "}
+                    +{" "}
+                  </button>
+                </div>
+                <div className="  flex-1 flex justify-between itc">
+                  <span className=" md:flex hidden text-[20px] font-bold">
                     {" "}
                     #{item.price}
                   </span>{" "}
+                  <X
+                    className="  cursor-pointer"
+                    onClick={() => remove(item)}
+                  />
                 </div>
               </div>
-              <div className="hidden md:flex items-center justify-start  flex-1">
-                <button className=" h-[40px] border-2 border-dark w-[40px] rounded-sm">
-                  {" "}
-                  -{" "}
-                </button>
-                <p className=" h-[40px] w-[40px] flex justify-center items-center">
-                  {item.qty}
-                </p>
-                <button
-                  onClick={() => handleAdd(item)}
-                  className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
-                >
-                  {" "}
-                  +{" "}
-                </button>
-              </div>
-              <div className="  flex-1 flex justify-between itc">
-                <span className=" md:flex hidden text-[20px] font-bold">
-                  {" "}
-                  #{item.price}
-                </span>{" "}
-                <X />
-              </div>
+            ))
+          ) : (
+            <div>
+              <h1>Cart empty , lets go shopping</h1>
             </div>
-          ))}
+          )}
+          <div className=" flex justify-end">
+            <div className="flex  flex-col gap-2 w-full md:w-1/2 float-right ">
+              <div className=" capitalize text-[20px] gap-3 flex flex-col ">
+                <div className=" flex justify-between">
+                  <span>Subtotal: </span> #{totalPrice}
+                </div>
+                <div className=" flex justify-between">
+                  <span>Shipping: </span> #4000
+                </div>
+              </div>
+              <hr className=" w-full h-[2px] bg-light-gray" />
+              <button className=" text-[20px] wfull h-[50px] bg-dark rounded text-white">
+                Checkout
+              </button>
+              <Link
+                href="/products"
+                className=" flex justify-center items-center text-[20px] wfull h-[50px] bg-transparent border-2  border-dark rounded text-dark"
+              >
+                Continue Shopping
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

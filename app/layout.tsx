@@ -3,7 +3,7 @@ import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Nav from "./components/Header";
 import Footer from "./components/Footer";
-
+import { Toaster } from "@/components/ui/toaster";
 const instru = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
@@ -25,6 +25,7 @@ export default function RootLayout({
       <body className={instru.className}>
         <Nav />
         {children}
+        <Toaster />
         <Footer />
       </body>
     </html>

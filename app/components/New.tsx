@@ -14,7 +14,8 @@ const New = () => {
           </div>
           <div className="w-full flex flex-wrap gap-[10px] md:gap-[20px] justify-between ">
             {[1, 2, 3].map((item, i) => (
-              <div
+              <Link
+                href="/product/1"
                 key={i}
                 className="flex relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
               >
@@ -31,7 +32,7 @@ const New = () => {
                   <span>Test Shoes</span>
                   <span>#4000</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
