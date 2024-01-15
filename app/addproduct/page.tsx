@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-const page = () => {
+const Page = () => {
   type Stagearray = {
     id: number;
     stage: boolean;
@@ -82,4 +82,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
