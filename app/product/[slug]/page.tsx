@@ -1,5 +1,5 @@
 "use client";
-
+import { db } from "../../../firebase";
 import useCartServices from "@/app/utils/store";
 import {
   Carousel,
@@ -8,10 +8,29 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const Product = () => {
+  const sff = async () => {
+    const testData = {
+      name: "Hello world!",
+      inTrend: true,
+      category: "Shirts",
+      price: 3.14159265,
+      dateExample: Timestamp.fromDate(new Date("December 10, 1815")),
+      images: ["/model2.jpg", "/model2.jpg", "/model2.jpg", "/model2.jpg"],
+      color: ["red", "black", "blue"],
+    };
+    const docref = await addDoc(collection(db, "data"), testData);
+    console.log("Document written with ID: ", docref.id);
+  };
+  // useEffect(() => {
+  //   sff();
+  // }, []);
+
   const product = {
     name: "test",
     price: 3000,
