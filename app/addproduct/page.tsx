@@ -9,7 +9,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-const page = () => {
+const Page = () => {
   const storage = getStorage();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
@@ -353,4 +353,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
