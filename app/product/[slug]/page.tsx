@@ -11,44 +11,80 @@ import {
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { useParams } from "next/navigation";
 const Product = () => {
-  const sff = async () => {
-    const testData = {
-      name: "Hello world!",
-      inTrend: true,
-      category: "Shirts",
-      price: 3.14159265,
-      dateExample: Timestamp.fromDate(new Date("December 10, 1815")),
-      images: ["/model2.jpg", "/model2.jpg", "/model2.jpg", "/model2.jpg"],
-      color: ["red", "black", "blue"],
-    };
-    const docref = await addDoc(collection(db, "data"), testData);
-    console.log("Document written with ID: ", docref.id);
-  };
-  // useEffect(() => {
-  //   sff();
-  // }, []);
+  const params = useParams<{ slug: string }>();
+  const { slug } = params;
 
-  const product = {
-    name: "test",
-    price: 3000,
-    qty: 1,
-    id: "testt",
-    img: "/model2.jpg",
+  type Product = {
+    id: string;
+    title: string;
+    price: number;
+    color?: string;
+    size?: string;
+    category: string;
+    images: string[];
+    quantityAvailable?: number;
+    details: string[];
+    tags?: string[];
+    likes?: number;
+    timeAdded: Date;
   };
   type Item = {
     name: string;
     price: number;
     qty: number;
+    img: string;
     size?: string;
     color?: string;
     id: string;
-    img: string;
   };
+
+  const [product, setProduct] = useState<Product>();
   const { increase, items, decrease, remove } = useCartServices();
-  const productIsInCart = items?.find((item: Item) => item.price === 3000);
+  const productIsInCart = items?.find((item: Item) => item.id === slug);
+  const cartItem = {
+    name: product?.title ?? "Default Title", // Provide a default value or handle the case where 'title' is undefined
+    price: product?.price ?? 0, // Provide a default value or handle the case where 'price' is undefined
+    qty: 1,
+    img: product?.images?.[0] ?? "/model.jpg", // Provide a default value or handle the case where 'images' or its first element is undefined
+    size: product?.size ?? "Default Size", // Provide a default value or handle the case where 'size' is undefined
+    color: product?.color ?? "Default Color", // Provide a default value or handle the case where 'color' is undefined
+    id: product?.id ?? "default-id", // Provide a default value or handle the case where 'id' is undefined
+  };
+
+  const getProductById = async () => {
+    const productId = slug;
+    try {
+      if (!productId) {
+        console.error("Invalid productId");
+        return null;
+      }
+      const productRef = doc(db, "products", productId);
+      const productSnapshot = await getDoc(productRef);
+
+      if (productSnapshot.exists()) {
+        const productData = {
+          id: productSnapshot.id,
+          ...productSnapshot.data(),
+        } as Product;
+        console.log("product Data:", productData);
+        setProduct(productData);
+        return productData;
+      } else {
+        console.log("product not found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching product by ID:", error);
+      return null;
+    }
+  };
+  useEffect(() => {
+    getProductById();
+  }, []);
 
   return (
     <div className=" border-b border-light bg-light-gray flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">
@@ -63,12 +99,12 @@ const Product = () => {
         <div className=" md:hidden">
           <Carousel>
             <CarouselContent>
-              {[1, 2, 3].map((item) => (
+              {product?.images?.map((item) => (
                 <CarouselItem key={item}>
                   {" "}
                   <div className="h-[500px] relative">
                     <Image
-                      src="/model.jpg"
+                      src={item}
                       alt="Your Image"
                       fill
                       objectFit="cover"
@@ -84,10 +120,10 @@ const Product = () => {
         </div>
         <div className="hidden md:flex w-full h-[500px]  md:h-full gap-[20px] md:flex-1 flex-shrink-0">
           <div className="hidden md:flex w-[30%]  flex-col gap-[20px]">
-            {[1, 2, 3].map((item) => (
+            {product?.images?.slice(0, 3).map((item) => (
               <div className="h-[300px] relative" key={item}>
                 <Image
-                  src="/model.jpg"
+                  src={item}
                   alt="Your Image"
                   fill
                   objectFit="cover"
@@ -99,7 +135,7 @@ const Product = () => {
           <div className=" relative h-full w-full md:flex-1">
             <div className=" w-full h-full">
               <Image
-                src="/model2.jpg"
+                src={product?.images[0] || ""}
                 alt="Your Image"
                 fill
                 objectFit="cover"
@@ -110,21 +146,29 @@ const Product = () => {
         </div>
         <div className=" h-full text-[20px] flex flex-col gap-[10px] w-full md:w-[30%]">
           <div className=" flex items-center md:items-start w-full justify-center md:justify-start flex-col ">
-            <p>Tea length Shirt</p>
-            <p>#4000</p>
+            <p className=" capitalize">{product?.title}</p>
+            <p className=" font-bold">#{product?.price}</p>
           </div>
 
           <div className=" flex rounded md:border-0 border-dark border-2 md:flex-col gap-[10px]">
             <div className="flex-1 flex items-center md:items-start justify-between px-3 md:flex-col md:px-0 md:flex-auto flex-row-reverse">
-              <span>Color:Black</span>
-              <div className=" w-5 h-5 rounded-sm  bg-black"></div>
+              <span>Color:{product?.color || null}</span>
+              {product?.color && (
+                <div className=" w-5 h-5 rounded-sm  bg-black"></div>
+              )}
             </div>
             <select
-              className=" flex-1 md:flex-auto bg-transparent border-l-2 border-dark md:rounded-sm py-3  md:border-2"
+              className=" flex-1 px-2 flex flex-col gap-3 md:flex-auto bg-transparent border-l-2 border-dark md:rounded-sm py-3  md:border-2"
               name=""
               id=""
             >
               <option value="">Select Size</option>
+              <option value="xs">Xtra Small</option>
+              <option value="s">Small</option>
+              <option value="md"> Medium </option>
+              <option value="lg"> Large</option>
+              <option value="xlg"> Xtra Large </option>
+              <option value="xxlg"> Xtra Xtra Large</option>
             </select>
           </div>
           {productIsInCart ? (
@@ -150,7 +194,7 @@ const Product = () => {
             </div>
           ) : (
             <button
-              onClick={() => increase(product)}
+              onClick={() => increase(cartItem)}
               className=" bg-dark text-white py-3 rounded-sm"
             >
               Add To Cart
@@ -166,10 +210,8 @@ const Product = () => {
           <div>
             <h1>Important Details</h1>
             <ol className=" list-disc pl-[2rem]">
-              <li>test desc1 </li>
-              <li>test desc1 </li>
-              <li>test desc1 </li>
-              <li>test desc1 </li>
+              {product?.details &&
+                product?.details.map((item, i) => <li key={i}>{item} </li>)}
             </ol>
           </div>
         </div>
