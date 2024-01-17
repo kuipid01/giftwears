@@ -175,7 +175,7 @@ const Product = () => {
             <div className="flex items-center text-[20px]  justify-start  flex-1">
               <span className=" mr-3"> Change Quantity</span>
               <button
-                onClick={() => decrease(product)}
+                onClick={() => decrease(cartItem)}
                 className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
               >
                 {" "}
@@ -185,7 +185,7 @@ const Product = () => {
                 {productIsInCart?.qty}
               </p>
               <button
-                onClick={() => increase(product)}
+                onClick={() => increase(cartItem)}
                 className=" h-[40px] border-2 border-dark w-[40px] rounded-sm"
               >
                 {" "}
