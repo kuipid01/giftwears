@@ -229,7 +229,7 @@ const page = () => {
               <label htmlFor="price">Enter Product Price</label>
               <input
                 onChange={(e) =>
-                  setFormData({ ...formData, price: e.target.value })
+                  setFormData({ ...formData, price: Number(e.target.value) })
                 }
                 className=" text-dark outline-none focus:outline-dark py-2 px-3  rounded"
                 type="number"
