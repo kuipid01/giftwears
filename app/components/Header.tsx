@@ -112,13 +112,13 @@ const Nav = () => {
         </div>
       )}
       {cartOpen && (
-        <div className=" fixed top-0 left-0 z-50 w-full h-screen  flex justify-end">
+        <div className=" fixed top-0 left-0 z-[500] w-full h-screen  flex justify-end">
           <div
             onClick={() => setCartOpen(false)}
             className=" w-full absolute top-0 left-0 h-full bg-light-gray opacity-50"
           ></div>
 
-          <div className=" w-[500px] overscroll-y-scroll px-5 relative  min-h-screen h-fit  bg-light flex flex-col gap-2">
+          <div className=" w-full md:w-[500px] overscroll-y-scroll px-5 relative  min-h-screen h-fit  bg-light flex flex-col gap-2">
             <div className="flex py-5 justify-between ">
               <p> Cart({items?.length}) </p>{" "}
               <X
@@ -134,7 +134,12 @@ const Nav = () => {
                     className=" shrink-0 flex gap-2 w-full h-[150px]"
                   >
                     <div className=" border border-dark rounded-sm overflow-hidden relative w-1/3 h-full">
-                      <Image alt="cartImage" src={item.img} fill />
+                      <Image
+                        alt="cartImage"
+                        style={{ objectFit: "cover" }}
+                        src={item.img}
+                        fill
+                      />
                     </div>
                     <div className=" flex flex-col">
                       <p className=" capitalize text-[20px] text-wrap">
@@ -162,7 +167,7 @@ const Nav = () => {
               )}
             </div>
           </div>
-          <div className=" bg-white p-5 absolute bottom-0 right-0 w-[500px] flex justify-end">
+          <div className=" bg-white p-5 absolute bottom-0 right-0 w-full md:w-[500px] flex justify-end">
             <div className="flex  flex-col gap-2 w-full  float-right ">
               <div className=" capitalize text-[20px] gap-3 flex flex-col ">
                 <div className=" flex justify-between">

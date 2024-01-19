@@ -19,6 +19,7 @@ const Page = () => {
   const [tagsInput, setTagsInput] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(false);
   const [indexTobePassed, setIndexTobePassed] = useState(1);
+  const [screenWidth, setScreenWidth] = useState(0);
   type Form = {
     title: string;
     price: number;
@@ -61,6 +62,19 @@ const Page = () => {
       move: false,
     },
   ]);
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+
+    // Add event listener on component mount
+    window.addEventListener("resize", handleResize);
+
+    // Remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(screenWidth);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files: FileList | null = e.target.files;
@@ -172,7 +186,8 @@ const Page = () => {
     );
     setIndexTobePassed((prev) => prev + 1);
   };
-  const transformVal = (indexTobePassed - 1) * 600 + "px";
+  const transformVal =
+    (indexTobePassed - 1) * (screenWidth > 800 ? 600 : 400) + "px";
 
   const translateVal = {
     transform: `translateX(-${transformVal})`,
@@ -199,21 +214,16 @@ const Page = () => {
         <p>Product is been added</p>
       </div>
     );
-  if (addingImages)
-    return (
-      <div className=" min-h-screen flex justify-center items-center">
-        <p>Images are been uploaded</p>
-      </div>
-    );
+
   return (
     <section className="min-h-screen text-[20px] flex flex-col bg-light justify-center items-center">
-      {error && <p>{error}</p>}
-      <div className=" py-5 max-w-[500px] md:max-w-[600px] text-light bg-dark overflow-x-hidden  rounded gap-3 ">
+      {error && <p className="mb-5 text-sm">{error}</p>}
+      <div className=" py-5 max-w-[400px] md:max-w-[600px] text-light bg-dark overflow-x-hidden  rounded gap-3 ">
         <div
           style={translateVal}
           className={`  overflow-x-hidden flex  w-fit `}
         >
-          <div className=" px-4  py-2 flex-shrink-0  w-[500px] md:w-[600px] ">
+          <div className=" px-4  py-2 flex-shrink-0  w-[400px] md:w-[600px] ">
             <div className=" flex mb-3 flex-col gap-3 ">
               <label htmlFor="title">Enter Product Title</label>
               <input
@@ -237,7 +247,7 @@ const Page = () => {
               />
             </div>
           </div>
-          <div className=" px-4  py-2 flex-shrink-0  w-[500px] md:w-[600px] ">
+          <div className=" px-4  py-2 flex-shrink-0  w-[400px] md:w-[600px] ">
             <div className=" flex flex-col gap-3 ">
               <label htmlFor="title">Upload Images </label>
               <input
@@ -265,7 +275,7 @@ const Page = () => {
               </select>
             </div>
           </div>
-          <div className=" px-4 flex flex-col gap-3 text-[15px]  py-2 flex-shrink-0  w-[500px] md:w-[600px] ">
+          <div className=" px-4 flex flex-col gap-3 text-[15px]  py-2 flex-shrink-0  w-[400px] md:w-[600px] ">
             <div className=" flex flex-col gap-3 ">
               <label htmlFor="title">Products Details </label>
               <div className=" flex gap-2">

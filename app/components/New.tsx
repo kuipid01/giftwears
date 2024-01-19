@@ -72,19 +72,19 @@ const New = () => {
               <Link
                 href={`/product/${item.id}`}
                 key={i}
-                className="flex relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
+                className="flex border border-lighter-grey relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
               >
                 <div className="w-full h-[90%] relative">
                   <Image
                     src={item?.images[0]}
                     alt="Your Image"
                     fill
-                    objectFit="cover"
+                    style={{ objectFit: "cover" }}
                     objectPosition="top"
                   />
                 </div>
-                <div className="flex justify-between uppercase font-normal text-[20px]">
-                  <span>{item.title}</span>
+                <div className="  p-3 flex justify-between uppercase font-normal text-[20px]">
+                  <span>{item.title.slice(0, 30)}</span>
                   <span>#{item.price}</span>
                 </div>
               </Link>

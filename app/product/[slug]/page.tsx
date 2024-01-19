@@ -107,7 +107,7 @@ const Product = () => {
                       src={item}
                       alt="Your Image"
                       fill
-                      objectFit="cover"
+                      style={{ objectFit: "cover" }}
                       objectPosition="top"
                     />
                   </div>
@@ -126,7 +126,7 @@ const Product = () => {
                   src={item}
                   alt="Your Image"
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   objectPosition="top"
                 />
               </div>
@@ -138,7 +138,7 @@ const Product = () => {
                 src={product?.images[0] || ""}
                 alt="Your Image"
                 fill
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 objectPosition="top"
               />
             </div>
@@ -230,7 +230,7 @@ const Product = () => {
                   src="/model2.jpg"
                   alt="Your Image"
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   objectPosition="top"
                 />
               </div>
