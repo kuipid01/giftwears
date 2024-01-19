@@ -83,9 +83,9 @@ const New = () => {
                     objectPosition="top"
                   />
                 </div>
-                <div className="  p-3 flex justify-between uppercase font-normal text-[20px]">
+                <div className="  p-3 flex flex-col justify-between capitalize font-normal text-[18px]  md:text-[20px]">
                   <span>{item.title.slice(0, 30)}</span>
-                  <span>#{item.price}</span>
+                  <span className=" font-bold">#{item.price}</span>
                 </div>
               </Link>
             ))}
