@@ -131,7 +131,7 @@ const Nav = () => {
                 items.map((item, i) => (
                   <div
                     key={i}
-                    className=" shrink-0 flex gap-2 w-full h-[150px]"
+                    className=" relative shrink-0 flex gap-2 w-full h-[150px]"
                   >
                     <div className=" border border-dark rounded-sm overflow-hidden relative w-1/3 h-full">
                       <Image
@@ -158,6 +158,11 @@ const Nav = () => {
                         Quantity:{item.qty}
                       </p>
                     </div>
+                    <X
+                      color="red"
+                      className=" right-2 top-2  absolute  cursor-pointer"
+                      onClick={() => remove(item)}
+                    />
                   </div>
                 ))
               ) : (
