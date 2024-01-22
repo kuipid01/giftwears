@@ -19,7 +19,7 @@ const Products = () => {
   const [data, setData] = useState([]);
 
   const [isClient, setIsClient] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [lastVisible, setLastVisible] = useState(null);
 
   const fetchPaginatedData = async () => {
@@ -74,7 +74,7 @@ const Products = () => {
   }, []);
   return (
     <>
-      <div className="border-b border-light z-[7000] bg-light-gray flex flex-col gap-[30px] py-[50px] px-[10%] min-h-screen">
+      <div className="border-b border-light z-[7000] bg-light-gray flex flex-col gap-[30px] py-[50px] px-[10px] min-h-screen">
         <div className="flex border-y-2 gap-[20px] border-dark py-2 overflow-x-hidden">
           {[1, 2, 3, 4, 5, 6, 8, 9, 10, 11].map((word, i) => (
             <h1
@@ -103,7 +103,7 @@ const Products = () => {
                   <Link
                     href={`/product/${item.id}`}
                     key={i}
-                    className="flex relative border border-light  w-full sm:w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
+                    className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
                   >
                     <div className="w-full h-[90%] relative">
                       <Image

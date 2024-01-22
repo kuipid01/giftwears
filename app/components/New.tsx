@@ -14,7 +14,7 @@ import Loadingshimmer from "./Loadingshimmer";
 
 const New = () => {
   const [newProducts, setNewProducts] = useState<Product[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   type Product = {
     id: string;
@@ -83,7 +83,7 @@ const New = () => {
                   <Link
                     href={`/product/${item.id}`}
                     key={i}
-                    className="flex relative border border-light  w-full sm:w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
+                    className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
                   >
                     <div className="w-full h-[90%] relative">
                       <Image
