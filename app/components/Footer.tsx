@@ -34,7 +34,6 @@ const Footer = () => {
       )
     );
   };
-  console.log(footerLinks);
   // const FooterLinks = [
   //   {
   //     id: 1,
@@ -58,7 +57,7 @@ const Footer = () => {
   //   },
   // ];
   return (
-    <footer className=" relative bg-light-gray justify-center flex items-center px-3 py-4 md:px-0 md:py-0 text-[20px] tracking-wide h-fit  md:h-[50vh]  md:text-dark ">
+    <footer className=" relative bg-light-gray justify-center flex items-center px-3 py-4 md:px-0 md:py-0 text-[17px] tracking-wide h-fit  md:h-[50vh]  md:text-dark ">
       <div className=" w-full h-fit md:w-[80%] flex flex-col md:flex-row  justify-between md:items-center md:gap-[20px] mx-auto">
         <div className=" flex flex-col gap-4">
           <>

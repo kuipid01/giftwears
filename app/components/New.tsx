@@ -10,9 +10,12 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useEffect, useState } from "react";
+import Loadingshimmer from "./Loadingshimmer";
 
 const New = () => {
   const [newProducts, setNewProducts] = useState<Product[] | null>(null);
+  const [loading, setLoading] = useState(true);
+
   type Product = {
     id: string;
     title: string;
@@ -30,6 +33,7 @@ const New = () => {
   // Fetch latest products from Firestore
   const fetchLatestProducts = async () => {
     try {
+      setLoading(true);
       // Create a query to the "products" collection, ordering by "createdAt" in descending order
       const q = query(collection(db, "products"), orderBy("timeAdded"));
 
@@ -46,8 +50,13 @@ const New = () => {
       const reversedProducts = latestProducts.reverse();
 
       setNewProducts(reversedProducts);
+      if (reversedProducts) {
+        setLoading(false);
+      }
+
       return reversedProducts;
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching latest products:", error);
       throw error;
     }
@@ -67,28 +76,30 @@ const New = () => {
               SEE ALL
             </Link>
           </div>
-          <div className="w-full flex flex-wrap gap-[10px] md:gap-[20px] justify-between ">
-            {newProducts?.slice(0, 10).map((item, i) => (
-              <Link
-                href={`/product/${item.id}`}
-                key={i}
-                className="flex border border-lighter-grey relative w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
-              >
-                <div className="w-full h-[90%] relative">
-                  <Image
-                    src={item?.images[0]}
-                    alt="Your Image"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    objectPosition="top"
-                  />
-                </div>
-                <div className="  p-3 flex flex-col justify-between capitalize font-normal text-[18px]  md:text-[20px]">
-                  <span>{item.title.slice(0, 30)}</span>
-                  <span className=" font-bold">#{item.price}</span>
-                </div>
-              </Link>
-            ))}
+          <div className="w-full min-h-screen flex flex-wrap gap-[10px] md:gap-[20px] justify-between">
+            {loading
+              ? [0, 1, 2, 3, 4, 5].map((item, i) => <Loadingshimmer key={i} />)
+              : newProducts?.slice(0, 20).map((item, i) => (
+                  <Link
+                    href={`/product/${item.id}`}
+                    key={i}
+                    className="flex relative border border-light  w-full sm:w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[500px]"
+                  >
+                    <div className="w-full h-[90%] relative">
+                      <Image
+                        src={item?.images[0] ?? "/model.jpg"}
+                        alt="Your Image"
+                        fill
+                        style={{ objectFit: "cover" }}
+                        objectPosition="top"
+                      />
+                    </div>
+                    <div className="p-3 flex flex-col justify-between capitalize font-normal text-[18px] md:text-[20px]">
+                      <span>{item.title.slice(0, 30)}</span>
+                      <span className="font-bold">#{item.price}</span>
+                    </div>
+                  </Link>
+                ))}
           </div>
         </div>
       </section>

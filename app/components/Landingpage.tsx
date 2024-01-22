@@ -61,7 +61,7 @@ const Landingpage = () => {
             <div className=" absolute top-0 left-0 w-full h-full bg-dark  opacity-30"></div>
             <Link
               className=" absolute bottom-[20%] text-light font-bold text-[25px] tracking-wide left-1/2 -translate-x-1/2"
-              href=""
+              href="/products"
             >
               In Trend
             </Link>
@@ -78,7 +78,7 @@ const Landingpage = () => {
 
             <Link
               className=" absolute bottom-[20%] text-light font-bold text-[25px] tracking-wide left-1/2 -translate-x-1/2"
-              href=""
+              href="/products"
             >
               {" "}
               Summer{" "}
