@@ -129,7 +129,7 @@ const Page = () => {
           className="w-full placeholder:text-dark outline-dark px-3 rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow py-2"
           placeholder="Enter Email"
         />
-        <div className="relative w-full my-3 outline-dark px-3 rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow py-2">
+        <div className="relative w-full my-3 outline-dark  rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow ">
           <motion.input
             variants={textAnim}
             initial="initial"
@@ -140,7 +140,7 @@ const Page = () => {
             }}
             name="password"
             type={showPassword ? "text" : "password"}
-            className="w-full placeholder:text-dark outline-none  "
+            className="w-full py-2 px-3 placeholder:text-dark bg-lighter-grey/20 outline-dark  "
             placeholder="Enter Password"
           />
           <div
@@ -159,7 +159,7 @@ const Page = () => {
         </button>
 
         <p className=" font-light my-3">
-          Don &apos t have an account?{" "}
+          {`Don't have an account?`}{" "}
           <Link className=" text-dark text-[15px] font-medium " href="">
             {" "}
             Sign Up
