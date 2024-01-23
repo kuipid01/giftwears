@@ -9,6 +9,8 @@ import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase";
 const Page = () => {
   const Userschema = yup
     .object({
@@ -19,24 +21,43 @@ const Page = () => {
         .lowercase()
         .trim()
         .min(6, "Password must exceed 5 characters"),
+      firstname: yup.string().required().lowercase().trim(),
+      lastname: yup.string().required().lowercase().trim(),
     })
     .required();
-  interface User extends yup.InferType<typeof Userschema> {
-    email: string;
-    password: string;
-    // using interface instead of type generally gives nicer editor feedback
-  }
+  // interface User extends yup.InferType<typeof Userschema> {
+  //   email: string;
+  //   password: string;
+  //   // using interface instead of type generally gives nicer editor feedback
+  // }
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const { loginUser } = useUserServices();
+  const { registerUser } = useUserServices();
   const router = useRouter();
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = async (data: {
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+  }) => {
     setSubmitting(true);
     try {
-      const { email, password } = data;
+      console.log("@register");
+      const { email, password, firstname, lastname } = data;
 
-      await loginUser({ email, password });
-
+      const res = await registerUser({ email, password, firstname, lastname });
+      if (!res) return;
+      const newUserData = {
+        email,
+        displayName: res.displayName,
+        id: res.uid,
+        verified: res.emailVerified,
+        firstname,
+        lastname,
+        timeAdded: Timestamp.now().toDate(),
+      };
+      const doc = await addDoc(collection(db, "users"), newUserData);
+      alert("Verification link sent to your mail ✔.");
       setSubmitting(false);
       router.push("/");
     } catch (error) {
@@ -44,7 +65,7 @@ const Page = () => {
       console.log(error);
     }
   };
-  console.log(submitting);
+
   const {
     register,
     handleSubmit,
@@ -59,7 +80,7 @@ const Page = () => {
   const textAnim = {
     initial: {
       opacity: 0,
-      x: -30,
+      x: -5,
     },
     animate: {
       x: 0,
@@ -155,9 +176,9 @@ const Page = () => {
         onSubmit={handleSubmit(onSubmit)}
         className=" shadow-lg items-left w-[80%] z-[300] md:max-w-[350px] h-fit  md:min-h-[60vh] py-[25px] px-[30px] flex flex-col rounded-2xl bg-white "
       >
-        <h1 className="font-bold text-center text-xl">User Login</h1>
+        <h1 className="font-bold text-center text-xl">User Sign Up</h1>
         <p className="text-center text-[15px]  font-light my-3 ">
-          Enter your details to get to sign in to your account
+          Here Enter your details to get to sign up to your account
         </p>
         <motion.input
           variants={textAnim}
@@ -174,6 +195,38 @@ const Page = () => {
         />
         <p className=" capitalize mt-1 text-red-400 ml-1">
           {errors.email?.message}
+        </p>
+        <motion.input
+          variants={textAnim}
+          initial="initial"
+          animate="animate"
+          transition={{
+            duration: 1,
+            type: "linear",
+          }}
+          type="text"
+          className="w-full placeholder:text-dark outline-dark px-3 rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow py-2"
+          placeholder="Enter Firstname"
+          {...register("firstname")}
+        />
+        <p className=" capitalize mt-1 text-red-400 ml-1">
+          {errors.firstname?.message}
+        </p>
+        <motion.input
+          variants={textAnim}
+          initial="initial"
+          animate="animate"
+          transition={{
+            duration: 1,
+            type: "linear",
+          }}
+          type="text"
+          className="w-full placeholder:text-dark outline-dark px-3 rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow py-2"
+          placeholder="Enter Lastname"
+          {...register("lastname")}
+        />
+        <p className=" capitalize mt-1 text-red-400 ml-1">
+          {errors.lastname?.message}
         </p>
         <div className="relative w-full mt-3 outline-dark  rounded-lg border border-lighter-grey bg-lighter-grey/20 shadow ">
           <motion.input
@@ -209,17 +262,14 @@ const Page = () => {
               : "bg-dark pointer-events-auto "
           } transition-all  text-white`}
         >
-          Log In{" "}
+          Sign Up{" "}
         </button>
 
         <p className=" font-light my-3">
-          {`Don't have an account?`}{" "}
-          <Link
-            className=" text-dark text-[15px] font-medium "
-            href="/register"
-          >
+          {`Have an account?`}{" "}
+          <Link className=" text-dark text-[15px] font-medium " href="/login">
             {" "}
-            Sign Up
+            Log in
           </Link>{" "}
         </p>
       </form>
