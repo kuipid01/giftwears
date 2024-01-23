@@ -159,7 +159,7 @@ const Page = () => {
         </button>
 
         <p className=" font-light my-3">
-          Don't have an account?{" "}
+          Don &apos t have an account?{" "}
           <Link className=" text-dark text-[15px] font-medium " href="">
             {" "}
             Sign Up
