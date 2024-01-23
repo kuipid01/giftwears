@@ -31,7 +31,7 @@ const page = () => {
   };
   return (
     <div className="w-full relative h-[90vh]  bg-lighter-grey flex justify-center items-center">
-      <div className="flex blur-md md:blur-sm w-full   h-full absolute left-0 top-0">
+      <div className="flex blur-md md:blur-0 w-full   h-full absolute left-0 top-0">
         <Image
           alt="svg"
           width={400}
