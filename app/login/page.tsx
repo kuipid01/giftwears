@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-const page = () => {
+const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { loginUser } = useUserServices();
   const handleLoginUser = () => {
@@ -170,4 +170,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
