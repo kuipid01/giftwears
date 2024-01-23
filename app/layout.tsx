@@ -4,12 +4,14 @@ import "./globals.css";
 import Nav from "./components/Header";
 import Footer from "./components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { useEffect } from "react";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 const instru = Instrument_Serif({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
 });
-
 export const metadata: Metadata = {
   title: "Gift Wears",
   description: "Gift wears",

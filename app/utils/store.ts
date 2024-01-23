@@ -78,7 +78,7 @@ export default function useCartServices() {
         items: updatedCartItems,
         totalPrice,
       });
-        toast({
+      toast({
         description: "Product quantity reduced 🤔",
       });
     },
