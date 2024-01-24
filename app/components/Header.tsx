@@ -111,11 +111,14 @@ const Nav = () => {
             />
           )}
           {userMenu && (
-            <div className="absolute shadow-lg  shadow-dark bg-light text-dark z-[500] top-[100%] min-w-[150px] rounded-b-md px-5 py-2 space-y-2 flex flex-col">
+            <div className="absolute shadow-lg  shadow-dark bg-light text-dark z-[500] top-[100%] w-fit min-w-[200px] rounded-b-md px-5 py-2  flex flex-col">
+              <p className="w-full font-black hover:bg-slate-300 transition-all hover:rounded text-dark tracking-widest uppercase flex justify-center items-center py-2 border-b border-dark">
+                {user?.email}
+              </p>
               <Link
                 onClick={() => setUserMenu(false)}
-                className="w-full flex justify-center items-center py-2 border-b border-dark"
-                href=""
+                className="w-full  hover:bg-slate-300 transition-all hover:rounded flex justify-center items-center py-2 border-b border-dark"
+                href="/dashboard"
               >
                 Dashboard
               </Link>
@@ -126,7 +129,7 @@ const Nav = () => {
                     logoutUser();
                     setUserMenu(false);
                   }}
-                  className="w-full gap-2  flex justify-center items-center py-2 border-b border-dark"
+                  className="w-full  hover:bg-slate-300 transition-all hover:rounded gap-2  flex justify-center items-center py-2 border-b border-dark"
                 >
                   <LogOut size={20} /> Logout{" "}
                 </button>
@@ -250,13 +253,6 @@ const Nav = () => {
                   className=" flex justify-center items-center text-[20px] w-full h-[50px] bg-dark rounded text-white"
                 >
                   View Cart
-                </Link>
-                <Link
-                  onClick={() => setCartOpen(false)}
-                  href="/products"
-                  className=" flex justify-center items-center text-[20px] w-full h-[50px] bg-dark rounded text-white"
-                >
-                  Proceed to checkout
                 </Link>
               </div>
             </div>

@@ -9,6 +9,8 @@ import useCartServices from "../utils/store";
 import useUserServices from "../utils/userStore";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "@/firebase";
 
 const Cartpage = () => {
   type Trans = {
@@ -18,7 +20,7 @@ const Cartpage = () => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user } = useUserServices();
 
   const {
@@ -48,6 +50,29 @@ const Cartpage = () => {
         "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
   };
+  const addToOrders = async () => {
+    const newOrderData = {
+      delivered: false,
+      paid: true,
+      id: user?.uid,
+      transactionId: transaction?.transaction_id,
+
+      timeAdded: Timestamp.now().toDate(),
+    };
+    const doc = await addDoc(collection(db, "orders"), newOrderData);
+    if (doc) {
+      toast({
+        description: "Payment done , Order details in your mail 🎉🎉🎉",
+      });
+
+      clear();
+      setLoading(false);
+      router.push("/");
+    } else {
+      setLoading(false);
+      return;
+    }
+  };
   const handleFlutterPayment = useFlutterwave(config as any);
   const [stagesOfPayment, setStagesOfPayment] = useState([
     { id: 1, desc: "Orders", stillOnTab: true },
@@ -55,7 +80,7 @@ const Cartpage = () => {
     { id: 3, desc: "Confirmation", stillOnTab: false },
   ]);
   const [transaction, setTransaction] = useState<Trans>();
-
+  console.log(transaction);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -68,15 +93,11 @@ const Cartpage = () => {
           setTransaction((prev) => ({ ...prev, transaction_id, tx_ref }));
 
           if (transaction) {
-           
+            setLoading(true);
             sendEmail();
-           
           }
-
-          
-          
-       
         } else {
+          setLoading(false);
           toast({
             description: "Payment failed , please try again 🤷‍♀️",
           });
@@ -91,8 +112,6 @@ const Cartpage = () => {
 
   const newArray = items?.map((obj) => obj.name);
   const sendEmail = () => {
-    setloading(true);
-
     // Replace the placeholders with your actual service ID, template ID, and public key
     const serviceId = "service_mo5rd0o";
     const templateId = "template_f3v0u3d";
@@ -111,15 +130,14 @@ const Cartpage = () => {
     emailjs
       .send(serviceId, templateId, templateParams, publicKey)
       .then((result) => {
-        toast({
-          description: "Payment done , Order details in your mail 🎉🎉🎉",
-        });
-        
-         clear();
-         router.push("/");
+        console.log("transaction mail");
+        if (result) {
+          addToOrders();
+        }
       })
       .catch((error) => {
-    
+        setLoading(false);
+        console.log(error);
       });
   };
 
@@ -237,8 +255,13 @@ const Cartpage = () => {
               </div>
               <hr className=" w-full h-[2px] bg-light-gray" />
               <button
+                disabled={loading}
                 onClick={handleCheckOut}
-                className=" text-[20px] wfull h-[50px] bg-dark rounded text-white"
+                className={` ${
+                  loading
+                    ? "bg-gray-400 pointer-events-none cursor-not-allowed"
+                    : "bg-dark pointer-events-auto cursor-pointer"
+                } text-[20px] wfull h-[50px] bg-dark rounded text-white`}
               >
                 Checkout
               </button>
