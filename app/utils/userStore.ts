@@ -73,6 +73,7 @@ export default function useUserServices() {
     return () => unsubscribe();
   }, [auth]);
   return {
+    user: user,
     registerUser: async (userInfo: {
       email: string;
       password: string;
@@ -94,6 +95,7 @@ export default function useUserServices() {
         toast({
           description: "User Created Successful ✔ ",
         });
+        setUser(user);
         return user;
       } catch (error) {
         toast({
@@ -117,10 +119,10 @@ export default function useUserServices() {
         const { email: emailIn, displayName, uid } = user; // Corrected destructuring
         userStore.setState({ email: emailIn, displayName, id: uid });
 
-        console.log(user);
         toast({
           description: "Login Successful✔ ",
         });
+        return user;
       } catch (error) {
         toast({
           description: "An error occured ,try again with correct details! 🤔",
@@ -129,6 +131,7 @@ export default function useUserServices() {
       }
     },
     logoutUser: async () => {
+      console.log("shey we dey here");
       await signOut(auth);
       setUser(null);
       userStore.setState({ email: "", displayName: "", id: "" });

@@ -1,6 +1,9 @@
 "use client";
 import {
+  ArrowRight,
   ChevronRight,
+  LogIn,
+  LogOut,
   Menu,
   Search,
   ShoppingCart,
@@ -11,32 +14,24 @@ import Link from "next/link";
 import { useState } from "react";
 import useCartServices from "../utils/store";
 import Image from "next/image";
+import useUserServices from "../utils/userStore";
 
 const Nav = () => {
-  const { increase, items, totalPrice, decrease, remove } = useCartServices();
+  const { items, totalPrice, remove } = useCartServices();
+  const { user, logoutUser } = useUserServices();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(false);
+  console.log(userMenu);
   const Navlinks = [
     {
       id: 1,
       name: "Shop",
+      link: "products",
       hasArrow: true,
     },
-    {
-      id: 2,
-      name: "New In",
-      hasArrow: false,
-    },
-    {
-      id: 3,
-      name: "In focus",
-      hasArrow: false,
-    },
-    {
-      id: 4,
-      name: "Sale",
-      hasArrow: false,
-    },
+
     {
       id: 5,
       name: "About",
@@ -52,9 +47,15 @@ const Nav = () => {
     <nav className="flex relative bg-light  border-b-2 border-light-gray w-full h-[10vh] justify-between ">
       <div className=" md:hidden flex w-[20%] justify-center items-center ">
         {menuOpen ? (
-          <X onClick={() => setMenuOpen(!menuOpen)} />
+          <X
+            className="cursor-pointer"
+            onClick={() => setMenuOpen(!menuOpen)}
+          />
         ) : (
-          <Menu onClick={() => setMenuOpen(!menuOpen)} />
+          <Menu
+            className="cursor-pointer"
+            onClick={() => setMenuOpen(!menuOpen)}
+          />
         )}
       </div>
       <div className=" md:border-r-2  flex-1 border-light-gray flex w-[20%] justify-center items-center">
@@ -70,12 +71,7 @@ const Nav = () => {
         >
           <li>Shop</li>
         </Link>
-        <li className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full">
-          New In
-        </li>
-        <li className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full">
-          In Focus
-        </li>
+
         <li className="flex-1 flex justify-center items-center border-r-2 border-light-gray h-full">
           About
         </li>
@@ -84,8 +80,67 @@ const Nav = () => {
         <div className="flex-1 flex justify-center items-center md:border-r-2 border-light-gray h-full">
           <Search />
         </div>
-        <div className="hidden flex-1 md:flex justify-center items-center md:border-r-2 border-light-gray h-full">
-          <User />
+        <div className="hidden relative flex-1 md:flex justify-center items-center md:border-r-2 border-light-gray h-full">
+          {!user ? (
+            <User
+              className=" cursor-pointer"
+              onClick={() => {
+                console.log("we are clicked");
+                if (userMenu === true) {
+                  setUserMenu(false);
+                } else {
+                  setUserMenu(true);
+                }
+              }}
+            />
+          ) : (
+            <Image
+              onClick={() => {
+                if (userMenu === true) {
+                  console.log("we are clicking menu");
+                  setUserMenu(false);
+                } else {
+                  setUserMenu(true);
+                }
+              }}
+              width={40}
+              height={40}
+              className=" rounded-full shadow-dark h-[40px] w-[40px] cursor-pointer object-cover object-center "
+              alt="profile pic"
+              src={"/model.jpg"}
+            />
+          )}
+          {userMenu && (
+            <div className="absolute shadow-lg  shadow-dark bg-light text-dark z-[500] top-[100%] min-w-[150px] rounded-b-md px-5 py-2 space-y-2 flex flex-col">
+              <Link
+                onClick={() => setUserMenu(false)}
+                className="w-full flex justify-center items-center py-2 border-b border-dark"
+                href=""
+              >
+                Dashboard
+              </Link>
+              {user ? (
+                <button
+                  onClick={() => {
+                    console.log("are we here");
+                    logoutUser();
+                    setUserMenu(false);
+                  }}
+                  className="w-full gap-2  flex justify-center items-center py-2 border-b border-dark"
+                >
+                  <LogOut size={20} /> Logout{" "}
+                </button>
+              ) : (
+                <Link
+                  onClick={() => setUserMenu(false)}
+                  href="/login"
+                  className="w-full gap-2  flex justify-center items-center py-2 border-b border-dark"
+                >
+                  <LogIn size={20} /> Login{" "}
+                </Link>
+              )}
+            </div>
+          )}
         </div>
         <div
           onClick={() => setCartOpen(true)}
@@ -99,13 +154,20 @@ const Nav = () => {
           <ul className=" flex flex-col gap-2">
             {Navlinks.map((link) => (
               <li
+                onClick={() => setMenuOpen(!menuOpen)}
                 className={` px-3 py-3 border-b-2 border-b-light-gray ${
                   link.hasArrow ? " flex justify-between items-center" : ""
                 }`}
                 key={link.id}
               >
                 {" "}
-                {link.name} {link.hasArrow && <ChevronRight color="#5c5c5c" />}
+                <Link
+                  className=" w-full h-full flex gap-2"
+                  href={`/${link.name}`}
+                >
+                  {link.name}{" "}
+                  {link.hasArrow && <ChevronRight color="#5c5c5c" />}
+                </Link>
               </li>
             ))}
           </ul>

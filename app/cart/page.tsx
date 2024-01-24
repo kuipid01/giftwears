@@ -1,24 +1,128 @@
 "use client";
-import { useEffect, useState } from "react";
-import useCartServices from "../utils/store";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import Link from "next/link";
+import emailjs from "@emailjs/browser";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import useCartServices from "../utils/store";
+import useUserServices from "../utils/userStore";
+import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Cartpage = () => {
+  type Trans = {
+    transaction_id: number | string;
+    tx_ref: string;
+  };
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
+  const [loading, setloading] = useState(false);
+  const { user } = useUserServices();
+
+  const {
+    increase,
+    items,
+    totalPrice,
+    clear,
+    decrease,
+    remove,
+  } = useCartServices();
+
+  const config = {
+    public_key: "FLWPUBK_TEST-cf4564e4f7931f5cc9f23aa36942617c-X",
+    tx_ref: Date.now().toString(),
+    amount: totalPrice,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user?.email ?? "N/A",
+      phone_number: user?.phoneNumber ?? "N/A",
+      name: user?.displayName || user?.email || "Guest",
+    },
+    customizations: {
+      title: "Product Checkout Page",
+      description: "Payment for items in cart",
+      logo:
+        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+  const handleFlutterPayment = useFlutterwave(config as any);
   const [stagesOfPayment, setStagesOfPayment] = useState([
     { id: 1, desc: "Orders", stillOnTab: true },
     { id: 2, desc: "Payment", stillOnTab: false },
     { id: 3, desc: "Confirmation", stillOnTab: false },
   ]);
+  const [transaction, setTransaction] = useState<Trans>();
+
   useEffect(() => {
     setMounted(true);
   }, []);
-  const { increase, items, totalPrice, decrease, remove } = useCartServices();
+  const handleCheckOut = () => {
+    handleFlutterPayment({
+      callback: (response) => {
+        // console.log(response, response.status);
+        if (response.status === "successful") {
+          const { transaction_id, tx_ref } = response;
+          setTransaction((prev) => ({ ...prev, transaction_id, tx_ref }));
 
-  console.log(items);
+          if (transaction) {
+           
+            sendEmail();
+           
+          }
+
+          
+          
+       
+        } else {
+          toast({
+            description: "Payment failed , please try again 🤷‍♀️",
+          });
+          // console.log("Payment Failed");
+        }
+        closePaymentModal();
+      },
+      onClose: () => {},
+    });
+  };
+  const myForm = useRef();
+
+  const newArray = items?.map((obj) => obj.name);
+  const sendEmail = () => {
+    setloading(true);
+
+    // Replace the placeholders with your actual service ID, template ID, and public key
+    const serviceId = "service_mo5rd0o";
+    const templateId = "template_f3v0u3d";
+    const publicKey = "YvI7FrI1htokZeo2H";
+
+    const templateParams = {
+      to_name: user?.email,
+      transaction_Id: transaction?.transaction_id,
+      transaction_ref: transaction?.tx_ref,
+      displayName: user?.displayName || user?.email,
+      amount: totalPrice,
+      from_name: "Giftwears",
+      newArray: newArray.join("\n"), // Use '\n' for line breaks in the email template
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((result) => {
+        toast({
+          description: "Payment done , Order details in your mail 🎉🎉🎉",
+        });
+        
+         clear();
+         router.push("/");
+      })
+      .catch((error) => {
+    
+      });
+  };
+
   if (!mounted) return;
   return (
     <div className="border-b overflow-hidden bg-lighter-grey border-light flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">
@@ -48,7 +152,7 @@ const Cartpage = () => {
       </div>
       <div className="hidden w-screen -translate-x-1/2 left-1/2 relative py-3 md:flex items-center justify-center overflow-hidden text-[20px] bg-light-gray  gap-5">
         {[1, 2, 3, 4].map((text) => (
-          <p key={text}>Free delivery at Lagos and Abuja </p>
+          <p key={text}>Free delivery to Lagos and Abuja </p>
         ))}
       </div>
       <div className=" flex flex-col gap-4">
@@ -132,7 +236,10 @@ const Cartpage = () => {
                 </div>
               </div>
               <hr className=" w-full h-[2px] bg-light-gray" />
-              <button className=" text-[20px] wfull h-[50px] bg-dark rounded text-white">
+              <button
+                onClick={handleCheckOut}
+                className=" text-[20px] wfull h-[50px] bg-dark rounded text-white"
+              >
                 Checkout
               </button>
               <Link
@@ -145,6 +252,18 @@ const Cartpage = () => {
           </div>
         </div>
       </div>
+      {/* <form ref={myForm.current}>
+            <input type="hidden" name="email" value={user?.email ?? null} />
+            <input
+              type="hidden"
+              name="displayName"
+              value={user?.displayName ? user.displayName : user?.email}
+            />
+            <input type="hidden" name="subTotal" value={totalPrice || '0'} />
+            <input type="hidden" name="from_name" value="Kanlearn" />
+            <input type="hidden" name="videoLink" value={newArray} />
+          
+          </form> */}
     </div>
   );
 };

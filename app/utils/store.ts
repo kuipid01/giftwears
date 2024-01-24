@@ -64,6 +64,15 @@ export default function useCartServices() {
         description: "Product removed 🤔",
       });
     },
+    clear: () => {
+      cartStore.setState({
+        items: [],
+        totalPrice: 0,
+      });
+      toast({
+        description: "Cart emptied  🤔",
+      });
+    },
     decrease: (item: Item) => {
       const exist = items.find((x) => x.id === item.id);
 
