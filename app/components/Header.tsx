@@ -39,7 +39,7 @@ const Nav = () => {
     },
     {
       id: 6,
-      name: "Account",
+      name: "Dashboard",
       hasArrow: true,
     },
   ];
@@ -77,15 +77,17 @@ const Nav = () => {
         </li>
       </ul>
       <div className="flex w-[20%] justify-between items-center">
-        <div className="flex-1 flex justify-center items-center md:border-r-2 border-light-gray h-full">
+        <Link
+          href="/search"
+          className="flex-1 flex justify-center items-center md:border-r-2 border-light-gray h-full"
+        >
           <Search />
-        </div>
+        </Link>
         <div className="hidden relative flex-1 md:flex justify-center items-center md:border-r-2 border-light-gray h-full">
           {!user ? (
             <User
               className=" cursor-pointer"
               onClick={() => {
-                console.log("we are clicked");
                 if (userMenu === true) {
                   setUserMenu(false);
                 } else {
@@ -97,7 +99,6 @@ const Nav = () => {
             <Image
               onClick={() => {
                 if (userMenu === true) {
-                  console.log("we are clicking menu");
                   setUserMenu(false);
                 } else {
                   setUserMenu(true);
@@ -166,13 +167,33 @@ const Nav = () => {
                 {" "}
                 <Link
                   className=" w-full h-full flex gap-2"
-                  href={`/${link.name}`}
+                  href={`/${link.name.toLowerCase()}`}
                 >
                   {link.name}{" "}
                   {link.hasArrow && <ChevronRight color="#5c5c5c" />}
                 </Link>
+                {}
               </li>
             ))}
+            {user ? (
+              <button
+                onClick={() => {
+                  logoutUser();
+                  setMenuOpen(!menuOpen);
+                }}
+                className="w-full px-3 hover:bg-slate-300 transition-all hover:rounded gap-2  flex justify-start items-start py-2 border-b border-dark"
+              >
+                <LogOut size={20} /> Logout{" "}
+              </button>
+            ) : (
+              <Link
+                onClick={() => setMenuOpen(!menuOpen)}
+                href="/login"
+                className="w-full gap-2 px-3  flex justify-start items-start py-2 border-b border-dark"
+              >
+                <LogIn size={20} /> Login{" "}
+              </Link>
+            )}
           </ul>
         </div>
       )}

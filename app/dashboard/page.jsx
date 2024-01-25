@@ -67,21 +67,20 @@ const Page = () => {
             </p>
           ))}
         </div>
-        <div className=" text-[20px] w-full py-3 border-y-2 mt-5 px-6 border-dark flex justify-between">
+        <div className="text-[15px] font-medium sm:text-[20px] w-full py-3 border-y-2 mt-5 px-6 border-dark flex justify-between">
           <span className=" w-[30%]">Transaction Id</span>
           <span className=" w-[20%]">Payment Status</span>
           <span className=" flex-1 text-center">Transaction Amount</span>
           <span className="  text-center flex-1 ">Delivered</span>
         </div>
         {loading &&
-          orders.length < 1 &&
           [0, 1, 3, 4, 5].map((item) => (
             <div
               key={item}
               className=" shimmer text-[20px] w-full py-3  mt-5 px-6 border-dark flex justify-between"
             ></div>
           ))}
-        {orders.length > 0 ? (
+        {orders.length > 0 &&
           orders?.map((order) => (
             <div
               key={order?.id}
@@ -108,9 +107,12 @@ const Page = () => {
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <p>Youve not placed an order yet .... </p>
+          ))}
+
+        {!loading && orders.length < 1 && (
+          <p className="my-6 capitalize text-[20px]">
+            You've not placed an order yet ....{" "}
+          </p>
         )}
       </div>
     </div>
