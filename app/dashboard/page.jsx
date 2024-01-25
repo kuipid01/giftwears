@@ -111,7 +111,7 @@ const Page = () => {
 
         {!loading && orders.length < 1 && (
           <p className="my-6 capitalize text-[20px]">
-            You've not placed an order yet ....{" "}
+            You`&apos;`ve not placed an order yet ....{" "}
           </p>
         )}
       </div>

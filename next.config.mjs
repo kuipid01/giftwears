@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+import withPlaiceholder  from '@plaiceholder/next'
 const nextConfig = {
     experimental: {
       scrollRestoration: true,
@@ -7,6 +8,6 @@ const nextConfig = {
       domains: ['firebasestorage.googleapis.com'],
     },
   };
-  
+  export default withPlaiceholder(nextConfig)
   module.exports = nextConfig;
   

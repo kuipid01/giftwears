@@ -14,7 +14,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "next/navigation";
-const Product = () => {
+import { getBlurData } from "@/app/components/Blur";
+const Product = async () => {
   const params = useParams<{ slug: string }>();
   const { slug } = params;
 
@@ -41,6 +42,7 @@ const Product = () => {
     color?: string;
     id: string;
   };
+  const [loading, setLoading] = useState(false);
 
   const [product, setProduct] = useState<Product>();
   const { increase, items, decrease, remove } = useCartServices();
@@ -54,12 +56,16 @@ const Product = () => {
     color: product?.color ?? "Default Color", // Provide a default value or handle the case where 'color' is undefined
     id: product?.id ?? "default-id", // Provide a default value or handle the case where 'id' is undefined
   };
-
+  const imageUrl = "/model.jpg";
+  const { base64 } = await getBlurData(imageUrl);
   const getProductById = async () => {
     const productId = slug;
     try {
+      setLoading(true);
       if (!productId) {
-        console.error("Invalid productId");
+        setLoading(false);
+        alert("Something went wrong");
+        // console.error("Invalid productId");
         return null;
       }
       const productRef = doc(db, "products", productId);
@@ -77,8 +83,10 @@ const Product = () => {
         console.log("product not found");
         return null;
       }
+      setLoading(false);
     } catch (error) {
-      console.error("Error fetching product by ID:", error);
+      setLoading(false);
+      //console.error("Error fetching product by ID:", error);
       return null;
     }
   };
@@ -105,6 +113,8 @@ const Product = () => {
                   <div className="h-[500px] relative">
                     <Image
                       src={item}
+                      placeholder="blur"
+                      blurDataURL={base64}
                       alt="Your Image"
                       fill
                       style={{ objectFit: "cover" }}
@@ -126,6 +136,8 @@ const Product = () => {
                   src={item}
                   alt="Your Image"
                   fill
+                  placeholder="blur"
+                  blurDataURL={base64}
                   style={{ objectFit: "cover" }}
                   objectPosition="top"
                 />
@@ -229,6 +241,8 @@ const Product = () => {
                 <Image
                   src="/model2.jpg"
                   alt="Your Image"
+                  placeholder="blur"
+                  blurDataURL={base64}
                   fill
                   style={{ objectFit: "cover" }}
                   objectPosition="top"
