@@ -5,10 +5,13 @@ const nextConfig = {
       scrollRestoration: true,
     },
     images: {
-      domains: ['firebasestorage.googleapis.com'],
-      remotePatterns: ['https://firebasestorage.googleapis.com/**/*'],
-    },
-  
+      remotePatterns: [
+      {
+      hostname: 'firebasestorage.googleapis.com',
+      }
+      ],
+      },
+   
    
   };
   export default withPlaiceholder(nextConfig)
