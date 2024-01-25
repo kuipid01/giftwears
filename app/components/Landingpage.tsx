@@ -52,7 +52,7 @@ const Landingpage = () => {
         <div className=" md:px-0 w-[100%] h-screen mx-auto flex">
           <div className=" flex-1  border relative h-full bg-light-gray">
             <Image
-              src="/modl1.jpg "
+              src=" https://images.unsplash.com/photo-1644615585800-7e40dd042c10?q=80&w=3504&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Your Image"
               fill
               objectFit="cover"
@@ -68,7 +68,7 @@ const Landingpage = () => {
           </div>
           <div className=" flex-1 border  relative h-full bg-lighter-grey">
             <Image
-              src="/model2.jpg "
+              src="https://images.unsplash.com/photo-1644615585800-7e40dd042c10?q=80&w=3504&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D "
               alt="Your Image"
               fill
               objectFit="cover"
