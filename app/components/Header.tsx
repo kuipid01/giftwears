@@ -23,7 +23,7 @@ const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
-  console.log(userMenu);
+
   const Navlinks = [
     {
       id: 1,

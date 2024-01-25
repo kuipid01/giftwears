@@ -16,6 +16,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useParams } from "next/navigation";
 
 import "./shimmer.css";
+import Related from "@/app/components/Related";
 const Product = () => {
   const params = useParams<{ slug: string }>();
   const { slug } = params;
@@ -232,31 +233,7 @@ const Product = () => {
         </div>
       )}
 
-      <div className=" mt-[5rem]">
-        <h1 className=" text-[25px]">Others:</h1>
-        <div className=" justify-between flex gap-[20px] flex-wrap ">
-          {[1, 2, 3, 4].map((item, i) => (
-            <div
-              className="md:w-[calc(25%-20px)] w-[calc(50%-20px)]  text-[20px] h-[250px]"
-              key={i}
-            >
-              <div className=" relative w-full h-[80%] md:h-[90%]">
-                <Image
-                  src="/model2.jpg"
-                  alt="Your Image"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  objectPosition="top"
-                />
-              </div>
-              <div className=" flex md:flex-row flex-col mt-2 justify-between items-center">
-                <span> Test T shirt for sale</span>
-                <span> #40000</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Related category={product ? product.category : "trouser"} />
     </div>
   );
 };
