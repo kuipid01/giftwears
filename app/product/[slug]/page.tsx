@@ -57,7 +57,7 @@ const Product = async () => {
     id: product?.id ?? "default-id", // Provide a default value or handle the case where 'id' is undefined
   };
   const imageUrl = "/model.jpg";
-  // const { base64 } = await getBlurData(imageUrl);
+  const { base64 } = await getBlurData(imageUrl);
   const getProductById = async () => {
     const productId = slug;
     try {
@@ -114,7 +114,7 @@ const Product = async () => {
                     <Image
                       src={item}
                       placeholder="blur"
-                      // blurDataURL={base64}
+                      blurDataURL={base64}
                       alt="Your Image"
                       fill
                       style={{ objectFit: "cover" }}
@@ -137,7 +137,7 @@ const Product = async () => {
                   alt="Your Image"
                   fill
                   placeholder="blur"
-                  // blurDataURL={base64}
+                  blurDataURL={base64}
                   style={{ objectFit: "cover" }}
                   objectPosition="top"
                 />
@@ -242,7 +242,7 @@ const Product = async () => {
                   src="/model2.jpg"
                   alt="Your Image"
                   placeholder="blur"
-                  // blurDataURL={base64}
+                  blurDataURL={base64}
                   fill
                   style={{ objectFit: "cover" }}
                   objectPosition="top"
