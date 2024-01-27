@@ -1,7 +1,9 @@
+'use client'
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
+import {delay, motion} from 'framer-motion'
+import OnBoardingScreen from '../../components/OnBoardingScreen'
 const Landingpage = () => {
   const bgStyle = {
     background:
@@ -11,19 +13,37 @@ const Landingpage = () => {
     fontFamily: "'Mirage', sans-serif",
   };
 
+  const textAnimVariant = {
+    initial:{
+      y:50,
+      opacity:.1,
+    },
+    animate:{
+      y:0,
+      opacity:1,
+      
+    },
+    exit:{
+      y:-10,
+      opacity:.3,
+    },
+    }
   return (
     <>
+    <OnBoardingScreen/>
       <div
         // style={bgStyle}
         className="h-[90vh] bg-light-gray overflow-hidden flex items-center w-full relative "
       >
         <div className=" z-50 absolute bottom-[15%] md:bottom-auto md:relative md:left-auto md:translate-x-0  left-1/2 md:w-fit  -translate-x-1/2 justify-center items-center md:items-start text-white  text-center md:text-left  md:text-dark flex flex-col space-y-2 md:ml-[8%] uppercase w-full">
-          <h1 className="text-[25px] md:text-[35px] tracking-wider  font-bold ">
+          <motion.h1 variants={textAnimVariant} initial='initial' animate='animate' transition={{
+            delay:1.8,
+          }} className="text-[25px] text-white md:text-[35px] tracking-wider  font-bold ">
             joy, one outfit at a time.
-          </h1>
-          <p className=" w-[70%] md:w-fit text-[15px] md:text-[20px] tracking-wide font-medium">
+          </motion.h1>
+          <motion.p variants={textAnimVariant} initial='initial' animate='animate' transition={{delay:2.0}} className=" w-[70%] text-white md:w-fit text-[15px] md:text-[20px] tracking-wide font-medium">
             Where style becomes a statement, and every day is a celebration.
-          </p>
+          </motion.p>
           <Link
             className=" w-fit border-b-2 border-white md:border-dark"
             href="/shop"
@@ -52,11 +72,11 @@ const Landingpage = () => {
         <div className=" md:px-0 w-[100%] h-screen mx-auto flex">
           <div className=" flex-1  border relative h-full bg-light-gray">
             <Image
-              src=" /Mod.jpg"
+              src="/Mod.jpg"
               alt="Your Image"
               fill
-              objectFit="cover"
-              objectPosition="top"
+              className='object-cover object-top'
+              
             />
             <div className=" absolute top-0 left-0 w-full h-full bg-dark  opacity-30"></div>
             <Link
@@ -68,11 +88,11 @@ const Landingpage = () => {
           </div>
           <div className=" flex-1 border  relative h-full bg-lighter-grey">
             <Image
-              src="/mod1.jpg "
+              src="/modl1.jpg"
               alt="Your Image"
               fill
-              objectFit="cover"
-              objectPosition="top"
+              
+              className='object-cover object-top'
             />
             <div className=" absolute top-0 left-0 w-full h-full bg-dark  opacity-30"></div>
 

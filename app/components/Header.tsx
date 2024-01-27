@@ -11,6 +11,8 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
+
+import {AnimatePresence, easeInOut, motion} from 'framer-motion'
 import { useState } from "react";
 import useCartServices from "../utils/store";
 import Image from "next/image";
@@ -43,6 +45,21 @@ const Nav = () => {
       hasArrow: true,
     },
   ];
+  const slideAnimVariant = {
+    initial:{
+      y:-50,
+      opacity:.3,
+    },
+    animate:{
+      y:0,
+      opacity:1,
+      
+    },
+    exit:{
+      y:-50,
+      opacity:.3,
+    },
+    }
   return (
     <nav className="flex relative bg-light  border-b-2 border-light-gray w-full h-[10vh] justify-between ">
       <div className=" md:hidden flex w-[20%] justify-center items-center ">
@@ -153,11 +170,32 @@ const Nav = () => {
           <ShoppingCart className="cursor-pointer" />
         </div>
       </div>
+      <AnimatePresence mode="wait">
       {menuOpen && (
-        <div className=" z-[500] border-b-2  border-dark/20 absolute top-[10vh] left-0 w-full bg-light h-screen">
+        <motion.div 
+        initial={{ y: -30, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    exit={{ y: 30, opacity: 0
+   }}
+    transition={{
+      type: "spring",
+      stiffness: 260,
+      damping: 20,
+      duration:.5
+    }}
+     className=" z-[500] border-b-2  border-dark/20 absolute top-[10vh] left-0 w-full bg-light h-screen">
           <ul className=" flex flex-col gap-2">
-            {Navlinks.map((link) => (
-              <li
+            {Navlinks.map((link,i) => (
+              <motion.li
+              initial={{ x: -30, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    exit={{ x: 30, opacity: 0
+   }}
+    transition={{
+     delay:i * 0.25,
+      duration:.5,
+      ease:easeInOut
+    }}
                 onClick={() => setMenuOpen(!menuOpen)}
                 className={` px-3 py-3 border-b-2 border-b-light-gray ${
                   link.hasArrow ? " flex justify-between items-center" : ""
@@ -173,7 +211,7 @@ const Nav = () => {
                   {link.hasArrow && <ChevronRight color="#5c5c5c" />}
                 </Link>
                 {}
-              </li>
+              </motion.li>
             ))}
             {user ? (
               <button
@@ -195,8 +233,10 @@ const Nav = () => {
               </Link>
             )}
           </ul>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
+     
       {cartOpen && (
         <div className=" fixed top-0 left-0 z-[500] w-full h-screen  flex justify-end">
           <div
