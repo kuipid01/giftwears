@@ -61,7 +61,15 @@ const Nav = () => {
     },
     }
   return (
-    <nav className="flex relative bg-light  border-b-2 border-light-gray w-full h-[10vh] justify-between ">
+    <motion.nav initial={{
+     opacity:.5
+    }} animate={{
+   opacity:1
+    }}
+    transition={{
+      duration:.5,
+      ease:easeInOut
+    }} className="flex relative bg-light  border-b-2 border-light-gray w-full h-[10vh] justify-between ">
       <div className=" md:hidden flex w-[20%] justify-center items-center ">
         {menuOpen ? (
           <X
@@ -236,9 +244,19 @@ const Nav = () => {
         </motion.div>
       )}
       </AnimatePresence>
-     
+     <AnimatePresence mode="wait">
       {cartOpen && (
-        <div className=" fixed top-0 left-0 z-[500] w-full h-screen  flex justify-end">
+        <motion.div 
+        initial={{ x: 100, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    exit={{ x: -50, opacity: 0
+   }}
+    transition={{
+      type: "spring",
+      stiffness: 200,
+      damping: 20,
+      duration:.5
+    }} className=" fixed top-0 left-0 z-[500] w-full h-screen  flex justify-end">
           <div
             onClick={() => setCartOpen(false)}
             className=" w-full absolute top-0 left-0 h-full bg-light-gray opacity-50"
@@ -255,7 +273,16 @@ const Nav = () => {
             <div className=" flex gap-4 mb-4  flex-col h-[60vh] max-h-fit overflow-y-scroll ">
               {items.length >= 1 ? (
                 items.map((item, i) => (
-                  <div
+                  <motion.div
+                  initial={{ x: -30, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: 30, opacity: 0
+                 }}
+                  transition={{
+                   delay:i * 0.25,
+                    duration:.5,
+                    ease:easeInOut
+                  }}
                     key={i}
                     className=" relative shrink-0 flex gap-2 w-full h-[150px]"
                   >
@@ -289,7 +316,7 @@ const Nav = () => {
                       className=" right-2 top-2  absolute  cursor-pointer"
                       onClick={() => remove(item)}
                     />
-                  </div>
+                  </motion.div>
                 ))
               ) : (
                 <div>
@@ -307,7 +334,13 @@ const Nav = () => {
               </div>
               <hr className=" w-full h-[2px] bg-light-gray" />
 
-              <div className="flex gap-5 ">
+              <motion.div    initial={{ y: 10, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -10, opacity: 0
+                 }}
+                 transition={{
+                  delay:.3
+                 }} className="flex gap-5 ">
                 <Link
                   onClick={() => setCartOpen(false)}
                   href="/cart"
@@ -315,12 +348,13 @@ const Nav = () => {
                 >
                   View Cart
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
-    </nav>
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 

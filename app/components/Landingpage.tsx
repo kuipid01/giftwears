@@ -37,18 +37,21 @@ const Landingpage = () => {
       >
         <div className=" z-50 absolute bottom-[15%] md:bottom-auto md:relative md:left-auto md:translate-x-0  left-1/2 md:w-fit  -translate-x-1/2 justify-center items-center md:items-start text-white  text-center md:text-left  md:text-dark flex flex-col space-y-2 md:ml-[8%] uppercase w-full">
           <motion.h1 variants={textAnimVariant} initial='initial' animate='animate' transition={{
-            delay:1.8,
+          
           }} className="text-[25px] text-white md:text-[35px] tracking-wider  font-bold ">
             joy, one outfit at a time.
           </motion.h1>
-          <motion.p variants={textAnimVariant} initial='initial' animate='animate' transition={{delay:2.0}} className=" w-[70%] text-white md:w-fit text-[15px] md:text-[20px] tracking-wide font-medium">
+          <motion.p variants={textAnimVariant} initial='initial' animate='animate' transition={{delay:0.2}} className=" w-[70%] text-white md:w-fit text-[15px] md:text-[20px] tracking-wide font-medium">
             Where style becomes a statement, and every day is a celebration.
           </motion.p>
           <Link
             className=" w-fit border-b-2 border-white md:border-dark"
             href="/shop"
           >
+            <motion.span variants={textAnimVariant} initial='initial' animate='animate' transition={{delay:0.3}}>
             Shop Now
+            </motion.span>
+           
           </Link>
         </div>
         <Image
