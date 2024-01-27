@@ -30,7 +30,7 @@ const Landingpage = () => {
     }
   return (
     <>
-    <OnBoardingScreen/>
+    {/* <OnBoardingScreen/> */}
       <div
         // style={bgStyle}
         className="h-[90vh] bg-light-gray overflow-hidden flex items-center w-full relative "
