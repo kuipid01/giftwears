@@ -66,7 +66,9 @@ const New = () => {
     fetchLatestProducts();
   }, []);
   const ref = useRef(null)
+  const bgRef = useRef(null)
   const isInView = useInView(ref)
+  const isBgInView = useInView(bgRef)
   const cardVariant = {
     initial:{
       y:70,
@@ -95,7 +97,7 @@ const New = () => {
             {loading
               ? [0, 1, 2, 3, 4, 5].map((item, i) => <Loadingshimmer key={i} />)
               : newProducts?.slice(0, 20).map((item, i) => (
-                <motion.div variants={cardVariant}  initial='initial' animate={ isInView ?  'animate' : ' initial'}  transition={{
+                <motion.div key={item.id} variants={cardVariant}  initial='initial' animate={ isInView ?  'animate' : ' initial'}  transition={{
                   delay:i*0.25,
                   duration:.5
                 }} className="flex relative  border border-light/30  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
@@ -129,7 +131,7 @@ const New = () => {
           </div>
         </div>
       </section>
-      <div className=" w-full relative h-[40vh] md:h-[60vh] flex justify-center items-center ">
+      <div ref={bgRef} className=" w-full relative h-[40vh] md:h-[60vh] flex justify-center items-center ">
         <div className="w-full  h-full absolute top-0 left-0">
           <Image
             src="/bgFooter.jpg"
@@ -143,9 +145,9 @@ const New = () => {
           className=" w-full  h-full absolute top-0 left-0 bg-dark opacity-50
            "
         ></div>
-        <h1 className=" text-[35px] md:text-[50px] relative  font-bold text-light">
+        <motion.h1 className=" text-[35px] md:text-[50px] relative  font-bold text-light">
           Harmattan Collection 2024
-        </h1>
+        </motion.h1>
       </div>
     </>
   );
