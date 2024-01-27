@@ -12,6 +12,20 @@ import { db } from "@/firebase";
 import { useEffect, useRef, useState } from "react";
 import Loadingshimmer from "./Loadingshimmer";
 import { useInView ,motion, inView} from "framer-motion"
+export const cardVariant = {
+  initial:{
+    y:70,
+    opacity:0
+    // clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)',
+
+  },
+  animate:{
+    y:0,
+    opacity:1
+    // clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
+
+  }
+}
 const New = () => {
   const [newProducts, setNewProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -69,20 +83,7 @@ const New = () => {
   const bgRef = useRef(null)
   const isInView = useInView(ref)
   const isBgInView = useInView(bgRef)
-  const cardVariant = {
-    initial:{
-      y:70,
-      opacity:0
-      // clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)',
-
-    },
-    animate:{
-      y:0,
-      opacity:1
-      // clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)',
-
-    }
-  }
+ 
   return (
     <>
       <section  ref={ref} className="min-h-screen py-7  h-fit bg-light-gray flex justify-center items-center">

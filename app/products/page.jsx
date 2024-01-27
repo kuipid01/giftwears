@@ -2,9 +2,8 @@
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
 import Loadingshimmer from "../components/Loadingshimmer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   collection,
   getDocs,
@@ -14,6 +13,8 @@ import {
   startAfter,
 } from "firebase/firestore";
 import { db } from "@/firebase";
+import { useInView, motion, inView } from "framer-motion";
+import { cardVariant } from "../components/New";
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -72,6 +73,9 @@ const Products = () => {
     setLoading(true);
     setIsClient(true);
   }, []);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef);
+
   return (
     <>
       <div className="border-b border-light z-[7000] bg-light-gray flex flex-col gap-[30px] py-[50px] px-[10px] min-h-screen">
@@ -96,29 +100,43 @@ const Products = () => {
             </select>
           </div>
 
-          <div className="w-full flex min-h-screen relative flex-wrap gap-[10px] md:gap-[20px] justify-evenly">
+          <div
+            ref={containerRef}
+            className="w-full flex min-h-screen relative flex-wrap gap-[10px] md:gap-[20px] justify-evenly"
+          >
             {loading
               ? [0, 1, 2, 3, 4, 5].map((item, i) => <Loadingshimmer key={i} />)
               : data.map((item, i) => (
-                  <Link
-                    href={`/product/${item.id}`}
-                    key={i}
+                  <motion.div
+                    variants={cardVariant}
+                    initial="initial"
+                    animate={isInView ? "animate" : " initial"}
+                    transition={{
+                      delay: i * 0.25,
+                      duration: 0.5,
+                    }}
                     className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
                   >
-                    <div className="w-full h-[90%] relative">
-                      <Image
-                        src={item?.images[0] ?? "/model.jpg"}
-                        alt="Your Image"
-                        fill
-                        style={{ objectFit: "cover" }}
-                        objectPosition="top"
-                      />
-                    </div>
-                    <div className="p-3 flex flex-col justify-between capitalize font-normal text-[18px] md:text-[20px]">
-                      <span>{item.title.slice(0, 30)}</span>
-                      <span className="font-bold">#{item.price}</span>
-                    </div>
-                  </Link>
+                    <Link
+                      className="w-full h-full"
+                      href={`/product/${item.id}`}
+                      key={i}
+                    >
+                      <div className="w-full h-[80%] relative">
+                        <Image
+                          src={item?.images[0] ?? "/model.jpg"}
+                          alt="Your Image"
+                          fill
+                          style={{ objectFit: "cover" }}
+                          objectPosition="top"
+                        />
+                      </div>
+                      <div className="p-3 flex flex-col justify-between capitalize font-normal text-[18px] md:text-[20px]">
+                        <span>{item.title.slice(0, 30)}</span>
+                        <span className="font-bold">#{item.price}</span>
+                      </div>
+                    </Link>
+                  </motion.div>
                 ))}
             {/* {data.map((item, i) => (
               <Link
