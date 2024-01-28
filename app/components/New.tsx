@@ -112,7 +112,7 @@ const New = () => {
         
 
                  
-                 <div className="w-full h-[80%] relative">
+                 <div className="w-full h-[75%] relative">
                    <Image
                      src={item?.images[0] ?? "/model.jpg"}
                      alt="Your Image"
