@@ -26,24 +26,25 @@ export const cardVariant = {
 
   }
 }
+export type Product = {
+  id: string;
+  title: string;
+  price: number;
+  color?: string;
+  size?: string;
+  category: string;
+  images: string[];
+  quantityAvailable?: number;
+  details: string[];
+  tags?: string[];
+  likes?: number;
+  timeAdded: Date;
+};
 const New = () => {
   const [newProducts, setNewProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState(false);
 
-  type Product = {
-    id: string;
-    title: string;
-    price: number;
-    color?: string;
-    size?: string;
-    category: string;
-    images: string[];
-    quantityAvailable?: number;
-    details: string[];
-    tags?: string[];
-    likes?: number;
-    timeAdded: Date;
-  };
+
   // Fetch latest products from Firestore
   const fetchLatestProducts = async () => {
     try {
