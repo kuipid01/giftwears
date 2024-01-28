@@ -102,7 +102,7 @@ const New = () => {
                 <motion.div key={item.id} variants={cardVariant}  initial='initial' animate={ isInView ?  'animate' : ' initial'}  transition={{
                   delay:i*0.25,
                   duration:.5
-                }} className="flex relative  border border-light/30  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
+                }} className="flex relative  border border-light/30  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[400px] md:h-[500px]"
                 >
    <Link 
                  
