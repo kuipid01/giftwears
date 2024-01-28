@@ -116,13 +116,13 @@ const Products = () => {
                       duration: 0.5,
                     }}
                     key={i}
-                    className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
+                    className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[400px] md:h-[500px]"
                   >
                     <Link
                       className="w-full h-full"
                       href={`/product/${item.id}`}
                     >
-                      <div className="w-full h-[80%] relative">
+                      <div className="w-full h-[70%] relative">
                         <Image
                           src={item?.images[0] ?? "/model.jpg"}
                           alt="Your Image"
