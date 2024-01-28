@@ -113,8 +113,8 @@ const Cartpage = () => {
   const newArray = items?.map((obj) => obj.name);
   const sendEmail = () => {
     // Replace the placeholders with your actual service ID, template ID, and public key
-    const serviceId = "service_mo5rd0o";
-    const templateId = "template_f3v0u3d";
+    const serviceId = 'service_mo5rd0o';
+    const templateId = 'template_f3v0u3d';
     const publicKey = "YvI7FrI1htokZeo2H";
 
     const templateParams = {
@@ -128,7 +128,7 @@ const Cartpage = () => {
     };
 
     emailjs
-      .send(serviceId, templateId, templateParams, publicKey)
+      .send(serviceId , templateId, templateParams, publicKey)
       .then((result) => {
         console.log("transaction mail");
         if (result) {
