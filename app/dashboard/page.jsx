@@ -53,7 +53,7 @@ const Page = () => {
     fetchOrders();
     setMounted(true);
   }, [user]);
-  if (!mounted) return;
+  if ((!mounted, fetchOrders)) return;
   return (
     <div className=" min-h-screen w-full">
       <div className=" w-full">

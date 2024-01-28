@@ -82,8 +82,8 @@ const Products = () => {
         <div className="flex border-y-2 gap-[20px] border-dark py-2 overflow-x-hidden">
           {[1, 2, 3, 4, 5, 6, 8, 9, 10, 11].map((word, i) => (
             <h1
+              key={word}
               className="-translate-x-[50px] uppercase text-[35px] md:text-[50px] font-light tracking-wide"
-              key={i}
             >
               PRODUCTS
             </h1>
@@ -115,12 +115,12 @@ const Products = () => {
                       delay: i * 0.25,
                       duration: 0.5,
                     }}
+                    key={i}
                     className="flex relative border border-light  w-[calc(50%-10px)] md:w-[calc(33.3333%-20px)] flex-col justify-between h-[350px] md:h-[500px]"
                   >
                     <Link
                       className="w-full h-full"
                       href={`/product/${item.id}`}
-                      key={i}
                     >
                       <div className="w-full h-[80%] relative">
                         <Image

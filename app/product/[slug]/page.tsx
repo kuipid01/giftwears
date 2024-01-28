@@ -92,7 +92,7 @@ const Product = () => {
   };
   useEffect(() => {
     getProductById();
-  }, []);
+  }, [getProductById]);
 
   return (
     <div className=" border-b border-light bg-light-gray flex flex-col gap-[30px]  py-[50px] px-[10%] min-h-screen">

@@ -64,7 +64,7 @@ const Related = ({ category }: any) => {
   useEffect(() => {
     fetchOrders();
     setMounted(true);
-  }, [category]);
+  }, [category,fetchOrders]);
   return (
     <div className=" w-full mt-[5rem]">
       <h1 className=" text-[25px]">Others:</h1>
