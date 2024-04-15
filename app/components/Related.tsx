@@ -64,18 +64,18 @@ const Related = ({ category }: any) => {
   useEffect(() => {
     fetchOrders();
     setMounted(true);
-  }, [category,fetchOrders]);
+  }, [category, fetchOrders]);
   return (
     <div className=" w-full mt-[5rem]">
       <h1 className=" text-[25px]">Others:</h1>
-      <div className=" w-full  flex gap-[10px] flex-wrap ">
+      <div className=" w-full  justify-between flex gap-[10px] flex-wrap ">
         {products?.map((item, i) => (
           <Link
             href={`/product/${item.id}`}
-            className="md:w-[calc(35%-20px)] bg-lighter-grey p-2 rounded-md shadow-lg w-[calc(50%-20px)]  text-[20px] h-[300px]"
+            className="md:w-[calc(33.3333%-10px)] bg-lighter-grey p-2 rounded-md shadow-lg w-[calc(50%-10px)]  text-[20px] h-[300px]"
             key={i}
           >
-            <div className=" relative w-full h-[80%] md:h-[75%]">
+            <div className=" relative w-full h-[70%] md:h-[75%]">
               <Image
                 src={item.images[0] || "/model.jpg"}
                 alt="Your Image"
@@ -84,10 +84,12 @@ const Related = ({ category }: any) => {
                 objectPosition="top"
               />
             </div>
-            <div className=" flex md:flex-row flex-col mt-2 justify-between items-center">
-              <span className=" font-bold text-dark capitalize">
+            <div className=" flex md:flex-row flex-col mt-2 justify-between items-start">
+              <span className=" font-bold text-sm text-dark capitalize">
                 {" "}
-                {item.title}
+                {item.title.length > 30
+                  ? item.title?.slice(0, 20) + "..."
+                  : item.title}
               </span>
               <span> #{item.price}</span>
             </div>
