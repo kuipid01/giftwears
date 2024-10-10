@@ -24,4 +24,5 @@ if (!firebase.apps.length) {
 } else {
   app = firebase.app(); // if already initialized, use that one
 }
+export const app
 export const db = getFirestore(app);
