@@ -18,5 +18,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+let app;
+if (!firebase.apps.length) {
+  app = initializeApp(firebaseConfig);
+} else {
+  app = firebase.app(); // if already initialized, use that one
+}
 export const db = getFirestore(app);
