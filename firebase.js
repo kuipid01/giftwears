@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase app if not already initialized
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps();
 
 // export const firebase = !fb.apps.length ? fb.initializeApp(firebaseConfig) : fb.app()
 export const db = getFirestore(app);

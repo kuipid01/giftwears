@@ -2,9 +2,8 @@
 const nextConfig = {
     experimental: {
       scrollRestoration: true,
-      excludeDefaultMomentLocales: false,
+        missingSuspenseWithCSRBailout: false,
     },
-    
     images: {
       domains: ['firebasestorage.googleapis.com'],
     },
