@@ -9,8 +9,9 @@ import useCartServices from "../utils/store";
 import useUserServices from "../utils/userStore";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+
 import { db } from "@/firebase";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 
 const Cartpage = () => {
   type Trans = {
@@ -23,14 +24,8 @@ const Cartpage = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUserServices();
 
-  const {
-    increase,
-    items,
-    totalPrice,
-    clear,
-    decrease,
-    remove,
-  } = useCartServices();
+  const { increase, items, totalPrice, clear, decrease, remove } =
+    useCartServices();
 
   const config = {
     public_key: "FLWPUBK_TEST-cf4564e4f7931f5cc9f23aa36942617c-X",
@@ -46,8 +41,7 @@ const Cartpage = () => {
     customizations: {
       title: "Product Checkout Page",
       description: "Payment for items in cart",
-      logo:
-        "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
   };
   const addToOrders = async () => {
@@ -113,8 +107,8 @@ const Cartpage = () => {
   const newArray = items?.map((obj) => obj.name);
   const sendEmail = () => {
     // Replace the placeholders with your actual service ID, template ID, and public key
-    const serviceId = 'service_mo5rd0o';
-    const templateId = 'template_f3v0u3d';
+    const serviceId = "service_mo5rd0o";
+    const templateId = "template_f3v0u3d";
     const publicKey = "YvI7FrI1htokZeo2H";
 
     const templateParams = {
@@ -128,7 +122,7 @@ const Cartpage = () => {
     };
 
     emailjs
-      .send(serviceId , templateId, templateParams, publicKey)
+      .send(serviceId, templateId, templateParams, publicKey)
       .then((result) => {
         console.log("transaction mail");
         if (result) {

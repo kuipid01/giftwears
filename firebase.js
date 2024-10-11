@@ -4,20 +4,16 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APIKEY,
-  authDomain: process.env.FIREBASE_AUTHDOMAIN,
-  projectId: process.env.FIREBASE_PROJECTID,
-  storageBucket:process.env.FIREBASE_STORAGE,
-  messagingSenderId: process.env.FIREBASE_APIKEY,
-  appId: process.env.FIREBASE_APIKEY
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID
 };
 
-// Initialize Firebase
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0]; // if already initialized, use that one
-}
+// Initialize Firebase app if not already initialized
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+
 
 export const db = getFirestore(app);
+export default app

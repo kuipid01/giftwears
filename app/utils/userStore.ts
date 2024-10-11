@@ -1,7 +1,6 @@
 "use client";
 import { create } from "zustand";
 import { useToast } from "@/components/ui/use-toast";
-import { initializeApp } from "firebase/app";
 
 import { cookies } from "next/headers";
 
@@ -22,20 +21,6 @@ import {
 import { persist } from "zustand/middleware";
 import { useEffect, useState } from "react";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyANHSRQj2vvpdmows1WTfXdj3zbxjHDCto",
-  authDomain: "react-netflix-clone-3723e.firebaseapp.com",
-  projectId: "react-netflix-clone-3723e",
-  storageBucket: "react-netflix-clone-3723e.appspot.com",
-  messagingSenderId: "321165397369",
-  appId: "1:321165397369:web:417d09a9149119320bb3a8",
-  measurementId: "G-BT0GZ50L23",
-};
-// Get authentication instance and navigation hook
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
 export type UserInfo = {
   email: string | null;
   password: string;

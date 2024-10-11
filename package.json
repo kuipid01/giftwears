@@ -17,6 +17,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-react": "^8.0.0-rc19",
+    "firebase": "^10.14.1",
     "flutterwave-react-v3": "^1.3.0",
     "framer-motion": "^11.0.3",
     "gsap": "^3.12.5",
