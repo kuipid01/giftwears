@@ -159,6 +159,7 @@ const Page = () => {
     }
 
     const submitForm = async () => {
+      console.log(formData);
       const newProductData = {
         ...formData,
         timeAdded: Timestamp.now().toDate(),
