@@ -1,7 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { db } from "../../firebase";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { toast } from "@/components/ui/use-toast";
 import {
   getStorage,
@@ -9,6 +7,9 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "@/firebase";
+
 const Page = () => {
   const storage = getStorage();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -165,6 +166,9 @@ const Page = () => {
         timeAdded: Timestamp.now().toDate(),
       };
       try {
+        if (!db) {
+          return;
+        }
         setAddingProduct(true);
         await addDoc(collection(db, "products"), newProductData);
         toast({

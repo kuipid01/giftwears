@@ -53,6 +53,7 @@ const Cartpage = () => {
 
       timeAdded: Timestamp.now().toDate(),
     };
+
     const doc = await addDoc(collection(db, "orders"), newOrderData);
     if (doc) {
       toast({

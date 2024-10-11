@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { db } from "../../../firebase";
 import useCartServices from "@/app/utils/store";
@@ -68,6 +69,7 @@ const Product = () => {
         // console.error("Invalid productId");
         return null;
       }
+
       const productRef = doc(db, "products", productId);
       const productSnapshot = await getDoc(productRef);
 
